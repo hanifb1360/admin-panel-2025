@@ -15,10 +15,10 @@ const activityColumns: ColumnDef<Activity>[] = [
     cell: ({ row }) => {
       const type = row.getValue('type') as string;
       const typeColors = {
-        login: 'bg-blue-100 text-blue-800',
-        order: 'bg-green-100 text-green-800',
-        signup: 'bg-purple-100 text-purple-800',
-        payment: 'bg-yellow-100 text-yellow-800',
+        login: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        order: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        signup: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+        payment: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
       };
       return (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeColors[type as keyof typeof typeColors]}`}>
@@ -48,8 +48,8 @@ const userColumns: ColumnDef<User>[] = [
     header: 'Name',
     cell: ({ row }) => (
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium text-gray-600">
+        <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
             {row.original.name.charAt(0).toUpperCase()}
           </span>
         </div>
@@ -67,9 +67,9 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string;
       const roleColors = {
-        admin: 'bg-red-100 text-red-800',
-        user: 'bg-gray-100 text-gray-800',
-        moderator: 'bg-blue-100 text-blue-800',
+        admin: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+        user: 'bg-gray-100 text-gray-800 dark:bg-gray-700/30 dark:text-gray-300',
+        moderator: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
       };
       return (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${roleColors[role as keyof typeof roleColors]}`}>
@@ -84,8 +84,8 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => (
       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
         row.getValue('isActive') 
-          ? 'bg-green-100 text-green-800' 
-          : 'bg-red-100 text-red-800'
+          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+          : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
       }`}>
         {row.getValue('isActive') ? 'Active' : 'Inactive'}
       </span>
@@ -163,7 +163,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activities */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Activities</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Activities</h2>
           <DataTable
             columns={activityColumns}
             data={activities || []}
@@ -173,7 +173,7 @@ export default function Dashboard() {
 
         {/* Recent Users */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Users</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Users</h2>
           <DataTable
             columns={userColumns}
             data={users || []}

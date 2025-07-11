@@ -16,13 +16,18 @@ export const globalStyles = `
 
   body {
     margin: 0;
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #111827;
-    background-color: #f9fafb;
+    font-family: ${typography.fontFamily.sans.join(', ')};
+    font-size: ${typography.fontSize.base};
+    line-height: ${typography.lineHeight.normal};
+    color: ${colors.gray[900]};
+    background-color: ${colors.gray[50]};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .dark body {
+    color: ${colors.gray[100]};
+    background-color: ${colors.gray[900]};
   }
 
   /* Typography */

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { cn } from '../lib/utils';
+import { designSystem } from '../lib/designSystem';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
@@ -11,7 +13,7 @@ export default function Layout({ children, title = 'Dashboard' }: LayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className={cn('flex h-screen', designSystem.colors.bg.secondary)}>
       <Sidebar 
         isCollapsed={sidebarCollapsed} 
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} 

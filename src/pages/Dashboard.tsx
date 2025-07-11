@@ -5,6 +5,7 @@ import DataTable from '../components/DataTable';
 import ThemeDemo from '../components/ThemeDemo';
 import { fetchDashboardStats, fetchActivities, fetchUsers } from '../lib/api';
 import { formatCurrency, formatDate } from '../lib/utils';
+import { useRealTimeUpdates } from '../hooks/useRealTimeUpdates';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Activity, User } from '../types';
 
@@ -99,6 +100,9 @@ const userColumns: ColumnDef<User>[] = [
 ];
 
 export default function Dashboard() {
+  // Enable real-time updates
+  useRealTimeUpdates();
+
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: fetchDashboardStats,

@@ -1,7 +1,9 @@
-import { Bell, Search, User } from 'lucide-react';
+import { Search, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { componentVariants, designSystem } from '../lib/designSystem';
 import ThemeToggle from './ThemeToggle';
+import ConnectionStatus from './ConnectionStatus';
+import RealTimeNotifications from './RealTimeNotifications';
 
 interface HeaderProps {
   title: string;
@@ -41,24 +43,11 @@ export default function Header({ title }: HeaderProps) {
           {/* Theme Toggle */}
           <ThemeToggle />
           
-          {/* Notifications */}
-          <button className={cn(
-            'relative p-2',
-            designSystem.effects.rounded.lg,
-            designSystem.states.hover.bg.gray100,
-            designSystem.effects.transition.colors
-          )}>
-            <Bell className={cn('w-5 h-5', designSystem.colors.text.secondary)} />
-            <span className={cn(
-              'absolute -top-1 -right-1 w-5 h-5 bg-red-500',
-              designSystem.colors.text.white,
-              designSystem.typography.body.xs,
-              designSystem.effects.rounded.full,
-              designSystem.layout.flex.center
-            )}>
-              3
-            </span>
-          </button>
+          {/* Connection Status */}
+          <ConnectionStatus />
+          
+          {/* Real-time Notifications */}
+          <RealTimeNotifications />
           
           {/* User Profile */}
           <div className={cn(designSystem.layout.flex.start, designSystem.spacing.gap.md)}>

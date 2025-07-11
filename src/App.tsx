@@ -1,14 +1,26 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeProvider';
+import { WebSocketProvider } from './contexts/WebSocketContext';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
+import { mockWebSocketServer } from './lib/mockWebSocketServer';
 
 const queryClient = new QueryClient();
 
 function App() {
   const [currentPage] = useState('dashboard');
+
+  // Start mock WebSocket server in development mode
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      mockWebSocketServer.start();
+      return () => {
+        mockWebSocketServer.stop();
+      };
+    }
+  }, []);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -23,9 +35,11 @@ function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <Layout title={currentPage === 'users' ? 'Users' : 'Dashboard'}>
-          {renderPage()}
-        </Layout>
+        <WebSocketProvider url="ws://localhost:8080" enabled={true}>
+          <Layout title={currentPage === 'users' ? 'Users' : 'Dashboard'}>
+            {renderPage()}
+          </Layout>
+        </WebSocketProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );

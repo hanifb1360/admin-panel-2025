@@ -609,7 +609,7 @@ export const componentVariants = {
       'px-6 py-3 text-left',
       tw.typography.body.xs,
       tw.typography.weight.medium,
-      'text-gray-500 uppercase tracking-wider',
+      'text-gray-500 dark:text-gray-400 uppercase tracking-wider',
     ].join(' '),
     cell: [
       'px-6 py-4 whitespace-nowrap',

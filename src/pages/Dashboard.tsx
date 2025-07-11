@@ -168,6 +168,12 @@ export default function Dashboard() {
             columns={activityColumns}
             data={activities || []}
             searchPlaceholder="Search activities..."
+            enableExport={true}
+            pageSize={5}
+            onExport={(data) => {
+              console.log('Exporting activities:', data);
+              // Here you could implement CSV export or other export functionality
+            }}
           />
         </div>
 
@@ -178,6 +184,16 @@ export default function Dashboard() {
             columns={userColumns}
             data={users || []}
             searchPlaceholder="Search users..."
+            enableRowSelection={true}
+            enableExport={true}
+            pageSize={5}
+            onRowSelectionChange={(selectedRows) => {
+              console.log('Selected users:', selectedRows);
+            }}
+            onExport={(data) => {
+              console.log('Exporting users:', data);
+              // Here you could implement CSV export or other export functionality
+            }}
           />
         </div>
       </div>

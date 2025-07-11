@@ -1,0 +1,656 @@
+/**
+ * Tailwind CSS Utilities for Design System
+ * Converts design tokens to Tailwind classes for component usage
+ */
+
+/**
+ * Convert semantic colors to Tailwind classes
+ */
+export const tw = {
+  // Text colors
+  text: {
+    primary: 'text-gray-900',
+    secondary: 'text-gray-600',
+    muted: 'text-gray-500',
+    inverse: 'text-white',
+    disabled: 'text-gray-400',
+    link: 'text-primary-600',
+    linkHover: 'hover:text-primary-700',
+    success: 'text-green-600',
+    error: 'text-red-600',
+    warning: 'text-yellow-600',
+    info: 'text-blue-600',
+    // Legacy compatibility
+    white: 'text-white',
+    primaryAccent: 'text-primary-600',
+    successLight: 'text-green-500',
+    errorLight: 'text-red-500',
+  },
+
+  // Background colors
+  bg: {
+    primary: 'bg-white',
+    secondary: 'bg-gray-50',
+    tertiary: 'bg-gray-100',
+    inverse: 'bg-gray-900',
+    disabled: 'bg-gray-100',
+    success: 'bg-green-50',
+    error: 'bg-red-50',
+    warning: 'bg-yellow-50',
+    info: 'bg-blue-50',
+    // Base colors
+    white: 'bg-white',
+    gray: {
+      50: 'bg-gray-50',
+      100: 'bg-gray-100',
+      200: 'bg-gray-200',
+      300: 'bg-gray-300',
+      400: 'bg-gray-400',
+      500: 'bg-gray-500',
+      600: 'bg-gray-600',
+      700: 'bg-gray-700',
+      800: 'bg-gray-800',
+      900: 'bg-gray-900',
+    },
+    primaryColors: {
+      50: 'bg-primary-50',
+      100: 'bg-primary-100',
+      200: 'bg-primary-200',
+      300: 'bg-primary-300',
+      400: 'bg-primary-400',
+      500: 'bg-primary-500',
+      600: 'bg-primary-600',
+      700: 'bg-primary-700',
+      800: 'bg-primary-800',
+      900: 'bg-primary-900',
+    },
+    red: {
+      50: 'bg-red-50',
+      100: 'bg-red-100',
+      600: 'bg-red-600',
+      700: 'bg-red-700',
+      800: 'bg-red-800',
+    },
+    green: {
+      50: 'bg-green-50',
+      100: 'bg-green-100',
+      600: 'bg-green-600',
+      700: 'bg-green-700',
+      800: 'bg-green-800',
+    },
+    yellow: {
+      50: 'bg-yellow-50',
+      100: 'bg-yellow-100',
+      600: 'bg-yellow-600',
+      700: 'bg-yellow-700',
+      800: 'bg-yellow-800',
+    },
+    blue: {
+      50: 'bg-blue-50',
+      100: 'bg-blue-100',
+      600: 'bg-blue-600',
+      700: 'bg-blue-700',
+      800: 'bg-blue-800',
+    },
+  },
+
+  // Border colors
+  border: {
+    primary: 'border-gray-200',
+    secondary: 'border-gray-300',
+    tertiary: 'border-gray-400',
+    inverse: 'border-gray-700',
+    focus: 'border-primary-500',
+    error: 'border-red-300',
+    success: 'border-green-300',
+    warning: 'border-yellow-300',
+    info: 'border-blue-300',
+    // Legacy compatibility
+    default: 'border-gray-200',
+    gray: 'border-gray-300',
+    gray800: 'border-gray-800',
+  },
+
+  // Interactive colors
+  interactive: {
+    primary: 'bg-primary-600 text-white',
+    primaryHover: 'hover:bg-primary-700',
+    primaryActive: 'active:bg-primary-800',
+    primaryDisabled: 'disabled:bg-gray-300',
+    secondary: 'bg-gray-200 text-gray-900',
+    secondaryHover: 'hover:bg-gray-300',
+    secondaryActive: 'active:bg-gray-400',
+    destructive: 'bg-red-600 text-white',
+    destructiveHover: 'hover:bg-red-700',
+    destructiveActive: 'active:bg-red-800',
+  },
+
+  // Typography
+  typography: {
+    // Font sizes
+    text: {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      base: 'text-base',
+      lg: 'text-lg',
+      xl: 'text-xl',
+      '2xl': 'text-2xl',
+      '3xl': 'text-3xl',
+    },
+    // Font weights
+    weight: {
+      light: 'font-light',
+      normal: 'font-normal',
+      medium: 'font-medium',
+      semibold: 'font-semibold',
+      bold: 'font-bold',
+    },
+    // Headings
+    heading: {
+      xs: 'text-xs font-medium',
+      sm: 'text-sm font-medium',
+      md: 'text-lg font-semibold',
+      lg: 'text-xl font-bold',
+      xl: 'text-2xl font-bold',
+      '2xl': 'text-3xl font-bold',
+    },
+    // Body text
+    body: {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      base: 'text-base',
+      lg: 'text-lg',
+    },
+    // Legacy compatibility
+    display: {
+      xl: 'text-3xl font-bold',
+      lg: 'text-2xl font-bold',
+    },
+  },
+
+  // Spacing
+  spacing: {
+    // Padding
+    p: {
+      0: 'p-0',
+      1: 'p-1',
+      2: 'p-2',
+      3: 'p-3',
+      4: 'p-4',
+      5: 'p-5',
+      6: 'p-6',
+      8: 'p-8',
+      10: 'p-10',
+      12: 'p-12',
+    },
+    // Margin
+    m: {
+      0: 'm-0',
+      1: 'm-1',
+      2: 'm-2',
+      3: 'm-3',
+      4: 'm-4',
+      5: 'm-5',
+      6: 'm-6',
+      8: 'm-8',
+      10: 'm-10',
+      12: 'm-12',
+    },
+    // Margin top
+    mt: {
+      0: 'mt-0',
+      1: 'mt-1',
+      2: 'mt-2',
+      3: 'mt-3',
+      4: 'mt-4',
+      5: 'mt-5',
+      6: 'mt-6',
+      8: 'mt-8',
+    },
+    // Margin bottom
+    mb: {
+      0: 'mb-0',
+      1: 'mb-1',
+      2: 'mb-2',
+      3: 'mb-3',
+      4: 'mb-4',
+      5: 'mb-5',
+      6: 'mb-6',
+      8: 'mb-8',
+    },
+    // Margin left
+    ml: {
+      0: 'ml-0',
+      1: 'ml-1',
+      2: 'ml-2',
+      3: 'ml-3',
+      4: 'ml-4',
+      5: 'ml-5',
+      6: 'ml-6',
+      8: 'ml-8',
+    },
+    // Margin right
+    mr: {
+      0: 'mr-0',
+      1: 'mr-1',
+      2: 'mr-2',
+      3: 'mr-3',
+      4: 'mr-4',
+      5: 'mr-5',
+      6: 'mr-6',
+      8: 'mr-8',
+    },
+    // Gap
+    gap: {
+      0: 'gap-0',
+      1: 'gap-1',
+      2: 'gap-2',
+      3: 'gap-3',
+      4: 'gap-4',
+      5: 'gap-5',
+      6: 'gap-6',
+      8: 'gap-8',
+      // Legacy compatibility
+      xs: 'gap-1',
+      sm: 'gap-2',
+      md: 'gap-4',
+      lg: 'gap-6',
+      xl: 'gap-8',
+    },
+    // Legacy compatibility - margin object
+    margin: {
+      xs: 'm-2',
+      sm: 'm-4',
+      md: 'm-6',
+      lg: 'm-8',
+      xl: 'm-12',
+      top: {
+        xs: 'mt-1',
+        sm: 'mt-2',
+        md: 'mt-4',
+        lg: 'mt-6',
+      },
+      bottom: {
+        xs: 'mb-1',
+        sm: 'mb-2',
+        md: 'mb-4',
+        lg: 'mb-6',
+      },
+      left: {
+        xs: 'ml-1',
+        sm: 'ml-2',
+        md: 'ml-3',
+        lg: 'ml-4',
+      },
+      right: {
+        xs: 'mr-1',
+        sm: 'mr-2',
+        md: 'mr-3',
+        lg: 'mr-4',
+      },
+    },
+  },
+
+  // Layout
+  layout: {
+    // Flexbox
+    flex: {
+      center: 'flex items-center justify-center',
+      between: 'flex items-center justify-between',
+      start: 'flex items-start',
+      end: 'flex items-end',
+      col: 'flex flex-col',
+      wrap: 'flex flex-wrap',
+      nowrap: 'flex flex-nowrap',
+    },
+    // Grid
+    grid: {
+      cols1: 'grid grid-cols-1',
+      cols2: 'grid grid-cols-2',
+      cols3: 'grid grid-cols-3',
+      cols4: 'grid grid-cols-4',
+      responsive: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+    },
+    // Container
+    container: {
+      full: 'w-full h-full',
+      screen: 'min-h-screen',
+      auto: 'w-auto h-auto',
+    },
+  },
+
+  // Effects
+  effects: {
+    // Shadows
+    shadow: {
+      none: 'shadow-none',
+      sm: 'shadow-sm',
+      md: 'shadow-md',
+      lg: 'shadow-lg',
+      xl: 'shadow-xl',
+    },
+    // Border radius
+    rounded: {
+      none: 'rounded-none',
+      sm: 'rounded-sm',
+      md: 'rounded-md',
+      lg: 'rounded-lg',
+      xl: 'rounded-xl',
+      full: 'rounded-full',
+    },
+    // Transitions
+    transition: {
+      all: 'transition-all duration-200',
+      colors: 'transition-colors duration-200',
+      transform: 'transition-transform duration-200',
+    },
+    // Hover effects
+    hover: {
+      scale: 'hover:scale-105',
+      shadow: 'hover:shadow-md',
+    },
+  },
+
+  // States
+  states: {
+    // Hover
+    hover: {
+      bg: {
+        gray50: 'hover:bg-gray-50',
+        gray100: 'hover:bg-gray-100',
+        gray200: 'hover:bg-gray-200',
+        gray300: 'hover:bg-gray-300',
+        gray800: 'hover:bg-gray-800',
+        primary50: 'hover:bg-primary-50',
+        primary700: 'hover:bg-primary-700',
+      },
+      text: {
+        white: 'hover:text-white',
+        primary700: 'hover:text-primary-700',
+      },
+    },
+    // Focus
+    focus: {
+      ring: 'focus:outline-none focus:ring-2 focus:ring-primary-500',
+      border: 'focus:border-transparent',
+    },
+    // Disabled
+    disabled: {
+      opacity: 'disabled:opacity-50',
+      cursor: 'disabled:cursor-not-allowed',
+    },
+  },
+
+  // Responsive
+  responsive: {
+    mobile: 'sm:',
+    tablet: 'md:',
+    desktop: 'lg:',
+    wide: 'xl:',
+  },
+};
+
+/**
+ * Component variants using Tailwind classes
+ */
+export const componentVariants = {
+  // Card variants
+  card: {
+    default: [
+      tw.bg.white,
+      tw.effects.rounded.lg,
+      tw.effects.shadow.sm,
+      tw.border.primary,
+      'border',
+      tw.spacing.p[6],
+    ].join(' '),
+    elevated: [
+      tw.bg.white,
+      tw.effects.rounded.lg,
+      tw.effects.shadow.lg,
+      tw.border.primary,
+      'border',
+      tw.spacing.p[6],
+    ].join(' '),
+    flat: [
+      tw.bg.white,
+      tw.effects.rounded.lg,
+      tw.border.primary,
+      'border',
+      tw.spacing.p[6],
+    ].join(' '),
+  },
+
+  // Button variants
+  button: {
+    primary: [
+      tw.interactive.primary,
+      tw.interactive.primaryHover,
+      tw.typography.weight.medium,
+      'py-2 px-4',
+      tw.effects.rounded.lg,
+      tw.effects.transition.colors,
+      tw.states.focus.ring,
+      tw.states.disabled.opacity,
+      tw.states.disabled.cursor,
+    ].join(' '),
+    secondary: [
+      tw.interactive.secondary,
+      tw.interactive.secondaryHover,
+      tw.typography.weight.medium,
+      'py-2 px-4',
+      tw.effects.rounded.lg,
+      tw.effects.transition.colors,
+      tw.states.focus.ring,
+    ].join(' '),
+    outline: [
+      'bg-transparent',
+      tw.text.link,
+      'border border-primary-600',
+      tw.states.hover.bg.primary50,
+      tw.typography.weight.medium,
+      'py-2 px-4',
+      tw.effects.rounded.lg,
+      tw.effects.transition.colors,
+      tw.states.focus.ring,
+    ].join(' '),
+    ghost: [
+      'bg-transparent',
+      tw.text.secondary,
+      tw.states.hover.bg.gray100,
+      tw.typography.weight.medium,
+      'py-2 px-4',
+      tw.effects.rounded.lg,
+      tw.effects.transition.colors,
+      tw.states.focus.ring,
+    ].join(' '),
+    danger: [
+      tw.interactive.destructive,
+      tw.interactive.destructiveHover,
+      tw.typography.weight.medium,
+      'py-2 px-4',
+      tw.effects.rounded.lg,
+      tw.effects.transition.colors,
+      tw.states.focus.ring,
+    ].join(' '),
+  },
+
+  // Input variants
+  input: {
+    default: [
+      'w-full px-3 py-2',
+      tw.border.secondary,
+      'border',
+      tw.effects.rounded.lg,
+      tw.states.focus.ring,
+      tw.states.focus.border,
+      tw.effects.transition.colors,
+    ].join(' '),
+    search: [
+      'pl-10 pr-4 py-2',
+      tw.border.secondary,
+      'border',
+      tw.effects.rounded.lg,
+      tw.states.focus.ring,
+      tw.states.focus.border,
+      tw.effects.transition.colors,
+    ].join(' '),
+    error: [
+      'w-full px-3 py-2',
+      tw.border.error,
+      'border',
+      tw.effects.rounded.lg,
+      'focus:ring-2 focus:ring-red-500',
+      tw.states.focus.border,
+      tw.effects.transition.colors,
+    ].join(' '),
+  },
+
+  // Icon containers
+  iconContainer: {
+    small: [
+      'w-8 h-8',
+      tw.effects.rounded.lg,
+      tw.layout.flex.center,
+    ].join(' '),
+    medium: [
+      'w-12 h-12',
+      tw.effects.rounded.lg,
+      tw.layout.flex.center,
+    ].join(' '),
+    large: [
+      'w-16 h-16',
+      tw.effects.rounded.lg,
+      tw.layout.flex.center,
+    ].join(' '),
+  },
+
+  // Status badges
+  status: {
+    success: [
+      'px-2 py-1',
+      tw.bg.success,
+      tw.text.success,
+      tw.effects.rounded.full,
+      tw.typography.body.xs,
+      tw.typography.weight.medium,
+    ].join(' '),
+    error: [
+      'px-2 py-1',
+      tw.bg.error,
+      tw.text.error,
+      tw.effects.rounded.full,
+      tw.typography.body.xs,
+      tw.typography.weight.medium,
+    ].join(' '),
+    warning: [
+      'px-2 py-1',
+      tw.bg.warning,
+      tw.text.warning,
+      tw.effects.rounded.full,
+      tw.typography.body.xs,
+      tw.typography.weight.medium,
+    ].join(' '),
+    info: [
+      'px-2 py-1',
+      tw.bg.info,
+      tw.text.info,
+      tw.effects.rounded.full,
+      tw.typography.body.xs,
+      tw.typography.weight.medium,
+    ].join(' '),
+  },
+
+  // Layout components
+  sidebar: {
+    container: [
+      tw.layout.flex.col,
+      'h-screen',
+      tw.bg.gray[900],
+      tw.text.inverse,
+      tw.effects.transition.all,
+    ].join(' '),
+    header: [
+      tw.layout.flex.between,
+      tw.spacing.p[6],
+      'border-b border-gray-800',
+    ].join(' '),
+    nav: [
+      'flex-1 px-4 py-6',
+      tw.spacing.gap[2],
+      'space-y-2',
+    ].join(' '),
+    footer: [
+      tw.spacing.p[6],
+      'border-t border-gray-800',
+    ].join(' '),
+  },
+
+  // Table variants
+  table: {
+    container: [
+      tw.bg.white,
+      tw.effects.rounded.lg,
+      tw.effects.shadow.sm,
+      tw.border.primary,
+      'border overflow-hidden',
+    ].join(' '),
+    header: [
+      tw.bg.gray[50],
+      'px-6 py-3 text-left',
+      tw.typography.body.xs,
+      tw.typography.weight.medium,
+      'text-gray-500 uppercase tracking-wider',
+    ].join(' '),
+    cell: [
+      'px-6 py-4 whitespace-nowrap',
+      tw.typography.body.sm,
+      tw.text.primary,
+    ].join(' '),
+    row: [
+      tw.states.hover.bg.gray50,
+      tw.effects.transition.colors,
+    ].join(' '),
+  },
+};
+
+/**
+ * Utility functions for combining classes
+ */
+export const combineClasses = (...classes: (string | undefined | false)[]): string => {
+  return classes.filter(Boolean).join(' ');
+};
+
+/**
+ * Create responsive classes
+ */
+export const responsive = (
+  mobile: string,
+  tablet?: string,
+  desktop?: string,
+  wide?: string
+): string => {
+  const classes = [mobile];
+  if (tablet) classes.push(`md:${tablet}`);
+  if (desktop) classes.push(`lg:${desktop}`);
+  if (wide) classes.push(`xl:${wide}`);
+  return classes.join(' ');
+};
+
+/**
+ * Create state-based classes
+ */
+export const withStates = (
+  base: string,
+  hover?: string,
+  focus?: string,
+  active?: string,
+  disabled?: string
+): string => {
+  const classes = [base];
+  if (hover) classes.push(hover);
+  if (focus) classes.push(focus);
+  if (active) classes.push(active);
+  if (disabled) classes.push(disabled);
+  return classes.join(' ');
+};

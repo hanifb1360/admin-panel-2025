@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Users, DollarSign, ShoppingCart, TrendingUp } from 'lucide-react';
 import StatsCard from '../components/StatsCard';
 import DataTable from '../components/DataTable';
+import ThemeDemo from '../components/ThemeDemo';
 import { fetchDashboardStats, fetchActivities, fetchUsers } from '../lib/api';
 import { formatCurrency, formatDate } from '../lib/utils';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -123,6 +124,9 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      {/* Theme Demo */}
+      <ThemeDemo />
+      
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard

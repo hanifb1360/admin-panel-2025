@@ -7,50 +7,50 @@
  * Convert semantic colors to Tailwind classes
  */
 export const tw = {
-  // Text colors
+  // Text colors with dark mode support
   text: {
-    primary: 'text-gray-900',
-    secondary: 'text-gray-600',
-    muted: 'text-gray-500',
-    inverse: 'text-white',
-    disabled: 'text-gray-400',
-    link: 'text-primary-600',
-    linkHover: 'hover:text-primary-700',
-    success: 'text-green-600',
-    error: 'text-red-600',
-    warning: 'text-yellow-600',
-    info: 'text-blue-600',
+    primary: 'text-gray-900 dark:text-gray-100',
+    secondary: 'text-gray-600 dark:text-gray-400',
+    muted: 'text-gray-500 dark:text-gray-500',
+    inverse: 'text-white dark:text-gray-900',
+    disabled: 'text-gray-400 dark:text-gray-600',
+    link: 'text-primary-600 dark:text-primary-400',
+    linkHover: 'hover:text-primary-700 dark:hover:text-primary-300',
+    success: 'text-green-600 dark:text-green-400',
+    error: 'text-red-600 dark:text-red-400',
+    warning: 'text-yellow-600 dark:text-yellow-400',
+    info: 'text-blue-600 dark:text-blue-400',
     // Legacy compatibility
     white: 'text-white',
-    primaryAccent: 'text-primary-600',
-    successLight: 'text-green-500',
-    errorLight: 'text-red-500',
+    primaryAccent: 'text-primary-600 dark:text-primary-400',
+    successLight: 'text-green-500 dark:text-green-400',
+    errorLight: 'text-red-500 dark:text-red-400',
   },
 
-  // Background colors
+  // Background colors with dark mode support
   bg: {
-    primary: 'bg-white',
-    secondary: 'bg-gray-50',
-    tertiary: 'bg-gray-100',
-    inverse: 'bg-gray-900',
-    disabled: 'bg-gray-100',
-    success: 'bg-green-50',
-    error: 'bg-red-50',
-    warning: 'bg-yellow-50',
-    info: 'bg-blue-50',
+    primary: 'bg-white dark:bg-gray-900',
+    secondary: 'bg-gray-50 dark:bg-gray-800',
+    tertiary: 'bg-gray-100 dark:bg-gray-700',
+    inverse: 'bg-gray-900 dark:bg-white',
+    disabled: 'bg-gray-100 dark:bg-gray-700',
+    success: 'bg-green-50 dark:bg-green-900/20',
+    error: 'bg-red-50 dark:bg-red-900/20',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20',
+    info: 'bg-blue-50 dark:bg-blue-900/20',
     // Base colors
-    white: 'bg-white',
+    white: 'bg-white dark:bg-gray-900',
     gray: {
-      50: 'bg-gray-50',
-      100: 'bg-gray-100',
-      200: 'bg-gray-200',
-      300: 'bg-gray-300',
-      400: 'bg-gray-400',
-      500: 'bg-gray-500',
-      600: 'bg-gray-600',
-      700: 'bg-gray-700',
-      800: 'bg-gray-800',
-      900: 'bg-gray-900',
+      50: 'bg-gray-50 dark:bg-gray-900',
+      100: 'bg-gray-100 dark:bg-gray-800',
+      200: 'bg-gray-200 dark:bg-gray-700',
+      300: 'bg-gray-300 dark:bg-gray-600',
+      400: 'bg-gray-400 dark:bg-gray-500',
+      500: 'bg-gray-500 dark:bg-gray-400',
+      600: 'bg-gray-600 dark:bg-gray-300',
+      700: 'bg-gray-700 dark:bg-gray-200',
+      800: 'bg-gray-800 dark:bg-gray-100',
+      900: 'bg-gray-900 dark:bg-gray-50',
     },
     primaryColors: {
       50: 'bg-primary-50',
@@ -94,21 +94,21 @@ export const tw = {
     },
   },
 
-  // Border colors
+  // Border colors with dark mode support
   border: {
-    primary: 'border-gray-200',
-    secondary: 'border-gray-300',
-    tertiary: 'border-gray-400',
-    inverse: 'border-gray-700',
-    focus: 'border-primary-500',
-    error: 'border-red-300',
-    success: 'border-green-300',
-    warning: 'border-yellow-300',
-    info: 'border-blue-300',
+    primary: 'border-gray-200 dark:border-gray-700',
+    secondary: 'border-gray-300 dark:border-gray-600',
+    tertiary: 'border-gray-400 dark:border-gray-500',
+    inverse: 'border-gray-700 dark:border-gray-300',
+    focus: 'border-primary-500 dark:border-primary-400',
+    error: 'border-red-300 dark:border-red-600',
+    success: 'border-green-300 dark:border-green-600',
+    warning: 'border-yellow-300 dark:border-yellow-600',
+    info: 'border-blue-300 dark:border-blue-600',
     // Legacy compatibility
-    default: 'border-gray-200',
-    gray: 'border-gray-300',
-    gray800: 'border-gray-800',
+    default: 'border-gray-200 dark:border-gray-700',
+    gray: 'border-gray-300 dark:border-gray-600',
+    gray800: 'border-gray-800 dark:border-gray-200',
   },
 
   // Interactive colors
@@ -351,27 +351,27 @@ export const tw = {
     },
   },
 
-  // States
+  // States with dark mode support
   states: {
     // Hover
     hover: {
       bg: {
-        gray50: 'hover:bg-gray-50',
-        gray100: 'hover:bg-gray-100',
-        gray200: 'hover:bg-gray-200',
-        gray300: 'hover:bg-gray-300',
-        gray800: 'hover:bg-gray-800',
-        primary50: 'hover:bg-primary-50',
-        primary700: 'hover:bg-primary-700',
+        gray50: 'hover:bg-gray-50 dark:hover:bg-gray-800',
+        gray100: 'hover:bg-gray-100 dark:hover:bg-gray-700',
+        gray200: 'hover:bg-gray-200 dark:hover:bg-gray-600',
+        gray300: 'hover:bg-gray-300 dark:hover:bg-gray-500',
+        gray800: 'hover:bg-gray-800 dark:hover:bg-gray-200',
+        primary50: 'hover:bg-primary-50 dark:hover:bg-primary-900/20',
+        primary700: 'hover:bg-primary-700 dark:hover:bg-primary-300',
       },
       text: {
-        white: 'hover:text-white',
-        primary700: 'hover:text-primary-700',
+        white: 'hover:text-white dark:hover:text-gray-900',
+        primary700: 'hover:text-primary-700 dark:hover:text-primary-300',
       },
     },
     // Focus
     focus: {
-      ring: 'focus:outline-none focus:ring-2 focus:ring-primary-500',
+      ring: 'focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
       border: 'focus:border-transparent',
     },
     // Disabled

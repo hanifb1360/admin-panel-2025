@@ -1,6 +1,7 @@
 import { Bell, Search, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { componentVariants, designSystem } from '../lib/designSystem';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   title: string;
@@ -36,6 +37,9 @@ export default function Header({ title }: HeaderProps) {
               className={componentVariants.input.search}
             />
           </div>
+          
+          {/* Theme Toggle */}
+          <ThemeToggle />
           
           {/* Notifications */}
           <button className={cn(

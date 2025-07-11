@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
+import { ThemeProvider } from './contexts/ThemeProvider';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
@@ -20,11 +21,13 @@ function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Layout title={currentPage === 'users' ? 'Users' : 'Dashboard'}>
-        {renderPage()}
-      </Layout>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <Layout title={currentPage === 'users' ? 'Users' : 'Dashboard'}>
+          {renderPage()}
+        </Layout>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

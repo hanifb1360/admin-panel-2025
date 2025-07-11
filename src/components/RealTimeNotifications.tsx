@@ -136,10 +136,15 @@ export default function RealTimeNotifications() {
           'relative p-2',
           designSystem.effects.rounded.lg,
           designSystem.states.hover.bg.gray100,
+          'dark:hover:bg-gray-700',
           designSystem.effects.transition.colors
         )}
       >
-        <Bell className="w-5 h-5" />
+        <Bell className={cn(
+          "w-5 h-5",
+          designSystem.colors.text.secondary,
+          "dark:text-gray-300"
+        )} />
         {unreadCount > 0 && (
           <span className={cn(
             'absolute -top-1 -right-1 w-5 h-5',
@@ -189,10 +194,15 @@ export default function RealTimeNotifications() {
                 className={cn(
                   'p-1',
                   designSystem.effects.rounded.md,
-                  designSystem.states.hover.bg.gray100
+                  designSystem.states.hover.bg.gray100,
+                  'dark:hover:bg-gray-700'
                 )}
               >
-                <X className="w-4 h-4" />
+                <X className={cn(
+                  "w-4 h-4",
+                  designSystem.colors.text.secondary,
+                  "dark:text-gray-300"
+                )} />
               </button>
             </div>
           </div>
@@ -206,7 +216,10 @@ export default function RealTimeNotifications() {
                 designSystem.colors.text.muted
               )}>
                 <div className={cn(designSystem.layout.flex.col, 'items-center', designSystem.spacing.gap.sm)}>
-                  <Bell className="w-8 h-8 opacity-50" />
+                  <Bell className={cn(
+                    "w-8 h-8 opacity-50",
+                    designSystem.colors.text.muted
+                  )} />
                   <span className={designSystem.typography.body.sm}>
                     No notifications yet
                   </span>

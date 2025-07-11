@@ -84,8 +84,18 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 designSystem.effects.rounded.lg,
                 designSystem.effects.transition.colors,
                 item.current
-                  ? cn(designSystem.colors.primary[600], designSystem.colors.text.white)
-                  : cn('text-gray-300', designSystem.states.hover.bg.gray800, designSystem.states.hover.text.white),
+                  ? cn(
+                      // Active state: Use primary-600 for consistent branding
+                      // Both light and dark modes use the same primary-600 for accessibility
+                      'bg-primary-600 text-white shadow-sm',
+                      'dark:bg-primary-600 dark:text-white',
+                      'hover:bg-primary-700 dark:hover:bg-primary-700'
+                    )
+                  : cn(
+                      'text-gray-300',
+                      designSystem.states.hover.bg.gray800,
+                      designSystem.states.hover.text.white
+                    ),
                 isCollapsed && cn(designSystem.layout.flex.center, 'px-2')
               )}
               title={isCollapsed ? item.name : undefined}

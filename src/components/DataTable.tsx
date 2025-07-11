@@ -202,7 +202,7 @@ export default function DataTable<TData, TValue>({
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
           </div>
         ) : (
-          <table className="w-full">
+          <table className="w-full min-w-[800px]">
             <thead className={designSystem.colors.bg.gray[50]}>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>

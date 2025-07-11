@@ -48,7 +48,7 @@ export default function DataTable<TData, TValue>({
   });
 
   return (
-    <div className={designSystem.spacing.gap.md}>
+    <div className={cn(designSystem.layout.flex.col, designSystem.spacing.gap.md)}>
       {/* Search */}
       <div className="relative max-w-sm">
         <Search className={cn(
@@ -108,7 +108,7 @@ export default function DataTable<TData, TValue>({
               </tr>
             ))}
           </thead>
-          <tbody className={cn(designSystem.colors.bg.white, 'divide-y divide-gray-200')}>
+          <tbody className={cn(designSystem.colors.bg.white, 'divide-y divide-gray-200 dark:divide-gray-700')}>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className={componentVariants.table.row}>
                 {row.getVisibleCells().map((cell) => (

@@ -15,6 +15,7 @@ body {
 /* Improved scrollbar for dark mode */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -29,22 +30,21 @@ body {
   @apply bg-gray-400 dark:bg-gray-500;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* Horizontal scrollbar for tables */
+.table-container::-webkit-scrollbar {
+  height: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.table-container::-webkit-scrollbar-track {
+  @apply bg-gray-50 dark:bg-gray-800;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
+.table-container::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+.table-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
 }
 
 /* Custom components */

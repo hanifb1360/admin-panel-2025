@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Plus, UserPlus } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import { fetchUsers } from '../lib/api';
-import { formatDate } from '../lib/utils';
+import { formatDate, cn } from '../lib/utils';
+import { tw } from '../design-system/utilities/tailwind';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { User } from '../types';
 
@@ -12,14 +13,14 @@ const userColumns: ColumnDef<User>[] = [
     header: 'Name',
     cell: ({ row }) => (
       <div className="flex items-center space-x-3">
-        <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium text-gray-600">
+        <div className={cn(tw.bg.gray[300], "w-10 h-10 rounded-full flex items-center justify-center")}>
+          <span className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>
             {row.original.name.charAt(0).toUpperCase()}
           </span>
         </div>
         <div>
-          <div className="font-medium text-gray-900">{row.getValue('name')}</div>
-          <div className="text-sm text-gray-500">{row.original.email}</div>
+          <div className={cn("font-medium", tw.text.primary)}>{row.getValue('name')}</div>
+          <div className={cn(tw.typography.body.sm, tw.text.secondary)}>{row.original.email}</div>
         </div>
       </div>
     ),
@@ -30,12 +31,12 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string;
       const roleColors = {
-        admin: 'bg-red-100 text-red-800',
-        user: 'bg-gray-100 text-gray-800',
-        moderator: 'bg-blue-100 text-blue-800',
+        admin: cn(tw.bg.red[100], tw.text.error),
+        user: cn(tw.bg.gray[100], tw.text.secondary),
+        moderator: cn(tw.bg.blue[100], tw.text.info),
       };
       return (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${roleColors[role as keyof typeof roleColors]}`}>
+        <span className={cn('px-2 py-1 rounded-full text-xs font-medium', roleColors[role as keyof typeof roleColors])}>
           {role}
         </span>
       );
@@ -45,11 +46,12 @@ const userColumns: ColumnDef<User>[] = [
     accessorKey: 'isActive',
     header: 'Status',
     cell: ({ row }) => (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+      <span className={cn(
+        'px-2 py-1 rounded-full text-xs font-medium',
         row.getValue('isActive') 
-          ? 'bg-green-100 text-green-800' 
-          : 'bg-red-100 text-red-800'
-      }`}>
+          ? cn(tw.bg.green[100], tw.text.success)
+          : cn(tw.bg.red[100], tw.text.error)
+      )}>
         {row.getValue('isActive') ? 'Active' : 'Inactive'}
       </span>
     ),
@@ -57,22 +59,30 @@ const userColumns: ColumnDef<User>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Created',
-    cell: ({ row }) => formatDate(row.getValue('createdAt')),
+    cell: ({ row }) => (
+      <span className={tw.text.secondary}>
+        {formatDate(row.getValue('createdAt'))}
+      </span>
+    ),
   },
   {
     accessorKey: 'updatedAt',
     header: 'Last Updated',
-    cell: ({ row }) => formatDate(row.getValue('updatedAt')),
+    cell: ({ row }) => (
+      <span className={tw.text.secondary}>
+        {formatDate(row.getValue('updatedAt'))}
+      </span>
+    ),
   },
   {
     id: 'actions',
     header: 'Actions',
     cell: () => (
       <div className="flex space-x-2">
-        <button className="text-primary-600 hover:text-primary-700 font-medium">
+        <button className={cn(tw.text.link, tw.text.linkHover, "font-medium")}>
           Edit
         </button>
-        <button className="text-red-600 hover:text-red-700 font-medium">
+        <button className={cn(tw.text.error, "hover:text-red-700 dark:hover:text-red-300 font-medium")}>
           Delete
         </button>
       </div>
@@ -99,10 +109,10 @@ export default function Users() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Users</h1>
-          <p className="text-gray-600">Manage your users and their permissions</p>
+          <h1 className={cn(tw.typography.heading.xl, tw.text.primary)}>Users</h1>
+          <p className={tw.text.secondary}>Manage your users and their permissions</p>
         </div>
-        <button className="btn-primary flex items-center space-x-2">
+        <button className={cn(tw.interactive.primary, tw.interactive.primaryHover, "flex items-center space-x-2 px-4 py-2 rounded-lg")}>
           <Plus className="w-4 h-4" />
           <span>Add User</span>
         </button>
@@ -110,51 +120,51 @@ export default function Users() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+        <div className={cn(tw.bg.primary, tw.border.primary, "p-6 rounded-lg border")}>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-              <UserPlus className="w-4 h-4 text-blue-600" />
+            <div className={cn(tw.bg.blue[100], "w-8 h-8 rounded-lg flex items-center justify-center")}>
+              <UserPlus className={cn("w-4 h-4", tw.text.info)} />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900">{users?.length || 0}</p>
+              <p className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>Total Users</p>
+              <p className={cn(tw.typography.heading.lg, tw.text.primary)}>{users?.length || 0}</p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+        <div className={cn(tw.bg.primary, tw.border.primary, "p-6 rounded-lg border")}>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-              <div className="w-3 h-3 bg-green-600 rounded-full"></div>
+            <div className={cn(tw.bg.green[100], "w-8 h-8 rounded-lg flex items-center justify-center")}>
+              <div className={cn("w-3 h-3 rounded-full", tw.bg.green[600])}></div>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Active Users</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>Active Users</p>
+              <p className={cn(tw.typography.heading.lg, tw.text.primary)}>
                 {users?.filter(user => user.isActive).length || 0}
               </p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+        <div className={cn(tw.bg.primary, tw.border.primary, "p-6 rounded-lg border")}>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-              <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+            <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+              <div className="w-3 h-3 bg-purple-600 dark:bg-purple-400 rounded-full"></div>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Admins</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>Admins</p>
+              <p className={cn(tw.typography.heading.lg, tw.text.primary)}>
                 {users?.filter(user => user.role === 'admin').length || 0}
               </p>
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg border border-gray-200">
+        <div className={cn(tw.bg.primary, tw.border.primary, "p-6 rounded-lg border")}>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-              <div className="w-3 h-3 bg-red-600 rounded-full"></div>
+            <div className={cn(tw.bg.red[100], "w-8 h-8 rounded-lg flex items-center justify-center")}>
+              <div className={cn("w-3 h-3 rounded-full", tw.bg.red[600])}></div>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Inactive Users</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>Inactive Users</p>
+              <p className={cn(tw.typography.heading.lg, tw.text.primary)}>
                 {users?.filter(user => !user.isActive).length || 0}
               </p>
             </div>

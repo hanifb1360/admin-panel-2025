@@ -4,7 +4,8 @@ import StatsCard from '../components/StatsCard';
 import DataTable from '../components/DataTable';
 import ThemeDemo from '../components/ThemeDemo';
 import { fetchDashboardStats, fetchActivities, fetchUsers } from '../lib/api';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatCurrency, formatDate, cn } from '../lib/utils';
+import { tw } from '../design-system/utilities/tailwind';
 import { useRealTimeUpdates } from '../hooks/useRealTimeUpdates';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Activity, User } from '../types';
@@ -16,13 +17,13 @@ const activityColumns: ColumnDef<Activity>[] = [
     cell: ({ row }) => {
       const type = row.getValue('type') as string;
       const typeColors = {
-        login: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-        order: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        login: cn(tw.bg.blue[100], tw.text.info),
+        order: cn(tw.bg.green[100], tw.text.success),
         signup: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-        payment: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+        payment: cn(tw.bg.yellow[100], tw.text.warning),
       };
       return (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${typeColors[type as keyof typeof typeColors]}`}>
+        <span className={cn('px-2 py-1 rounded-full text-xs font-medium', typeColors[type as keyof typeof typeColors])}>
           {type}
         </span>
       );
@@ -39,7 +40,11 @@ const activityColumns: ColumnDef<Activity>[] = [
   {
     accessorKey: 'timestamp',
     header: 'Time',
-    cell: ({ row }) => formatDate(row.getValue('timestamp')),
+    cell: ({ row }) => (
+      <span className={tw.text.secondary}>
+        {formatDate(row.getValue('timestamp'))}
+      </span>
+    ),
   },
 ];
 
@@ -49,18 +54,21 @@ const userColumns: ColumnDef<User>[] = [
     header: 'Name',
     cell: ({ row }) => (
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+        <div className={cn(tw.bg.gray[300], "w-8 h-8 rounded-full flex items-center justify-center")}>
+          <span className={cn(tw.typography.body.sm, "font-medium", tw.text.secondary)}>
             {row.original.name.charAt(0).toUpperCase()}
           </span>
         </div>
-        <span>{row.getValue('name')}</span>
+        <span className={tw.text.primary}>{row.getValue('name')}</span>
       </div>
     ),
   },
   {
     accessorKey: 'email',
     header: 'Email',
+    cell: ({ row }) => (
+      <span className={tw.text.secondary}>{row.getValue('email')}</span>
+    ),
   },
   {
     accessorKey: 'role',
@@ -68,12 +76,12 @@ const userColumns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const role = row.getValue('role') as string;
       const roleColors = {
-        admin: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-        user: 'bg-gray-100 text-gray-800 dark:bg-gray-700/30 dark:text-gray-300',
-        moderator: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        admin: cn(tw.bg.red[100], tw.text.error),
+        user: cn(tw.bg.gray[100], tw.text.secondary),
+        moderator: cn(tw.bg.blue[100], tw.text.info),
       };
       return (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${roleColors[role as keyof typeof roleColors]}`}>
+        <span className={cn('px-2 py-1 rounded-full text-xs font-medium', roleColors[role as keyof typeof roleColors])}>
           {role}
         </span>
       );
@@ -83,11 +91,12 @@ const userColumns: ColumnDef<User>[] = [
     accessorKey: 'isActive',
     header: 'Status',
     cell: ({ row }) => (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+      <span className={cn(
+        'px-2 py-1 rounded-full text-xs font-medium',
         row.getValue('isActive') 
-          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-          : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-      }`}>
+          ? cn(tw.bg.green[100], tw.text.success)
+          : cn(tw.bg.red[100], tw.text.error)
+      )}>
         {row.getValue('isActive') ? 'Active' : 'Inactive'}
       </span>
     ),
@@ -95,7 +104,11 @@ const userColumns: ColumnDef<User>[] = [
   {
     accessorKey: 'createdAt',
     header: 'Created',
-    cell: ({ row }) => formatDate(row.getValue('createdAt')),
+    cell: ({ row }) => (
+      <span className={tw.text.secondary}>
+        {formatDate(row.getValue('createdAt'))}
+      </span>
+    ),
   },
 ];
 
@@ -167,7 +180,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Activities */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Activities</h2>
+          <h2 className={cn(tw.typography.heading.lg, tw.text.primary)}>Recent Activities</h2>
           <DataTable
             columns={activityColumns}
             data={activities || []}
@@ -183,7 +196,7 @@ export default function Dashboard() {
 
         {/* Recent Users */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Users</h2>
+          <h2 className={cn(tw.typography.heading.lg, tw.text.primary)}>Recent Users</h2>
           <DataTable
             columns={userColumns}
             data={users || []}

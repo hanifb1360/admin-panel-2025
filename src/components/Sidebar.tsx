@@ -16,19 +16,21 @@ import { componentVariants, designSystem } from '../lib/designSystem';
 interface SidebarProps {
   isCollapsed: boolean;
   onToggle: () => void;
+  currentPage?: string;
+  onNavigate?: (page: string) => void;
 }
 
 const navigation = [
-  { name: 'Dashboard', icon: LayoutDashboard, href: '/', current: true },
-  { name: 'Users', icon: Users, href: '/users', current: false },
-  { name: 'Forms', icon: FileText, href: '/forms', current: false },
-  { name: 'Orders', icon: ShoppingCart, href: '/orders', current: false },
-  { name: 'Products', icon: Package, href: '/products', current: false },
-  { name: 'Analytics', icon: BarChart3, href: '/analytics', current: false },
-  { name: 'Settings', icon: Settings, href: '/settings', current: false },
+  { name: 'Dashboard', icon: LayoutDashboard, page: 'dashboard' },
+  { name: 'Users', icon: Users, page: 'users' },
+  { name: 'Forms', icon: FileText, page: 'forms' },
+  { name: 'Orders', icon: ShoppingCart, page: 'orders' },
+  { name: 'Products', icon: Package, page: 'products' },
+  { name: 'Analytics', icon: BarChart3, page: 'analytics' },
+  { name: 'Settings', icon: Settings, page: 'settings' },
 ];
 
-export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
+export default function Sidebar({ isCollapsed, onToggle, currentPage, onNavigate }: SidebarProps) {
   return (
     <div className={cn(
       componentVariants.sidebar.container,
@@ -75,17 +77,18 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <nav className={componentVariants.sidebar.nav}>
         {navigation.map((item) => {
           const Icon = item.icon;
+          const isActive = currentPage === item.page;
           return (
-            <a
+            <button
               key={item.name}
-              href={item.href}
+              onClick={() => onNavigate?.(item.page)}
               className={cn(
                 designSystem.layout.flex.start,
                 designSystem.spacing.gap.md,
-                'px-3 py-2',
+                'px-3 py-2 w-full',
                 designSystem.effects.rounded.lg,
                 designSystem.effects.transition.colors,
-                item.current
+                isActive
                   ? cn(
                       // Active state: Use primary-600 for consistent branding
                       // Both light and dark modes use the same primary-600 for accessibility
@@ -104,7 +107,7 @@ export default function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
             >
               <Icon className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span>{item.name}</span>}
-            </a>
+            </button>
           );
         })}
       </nav>

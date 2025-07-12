@@ -7,16 +7,20 @@ import Header from './Header';
 interface LayoutProps {
   children: React.ReactNode;
   title?: string;
+  currentPage?: string;
+  onNavigate?: (page: string) => void;
 }
 
-export default function Layout({ children, title = 'Dashboard' }: LayoutProps) {
+export default function Layout({ children, title = 'Dashboard', currentPage, onNavigate }: LayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
     <div className={cn('flex h-screen', designSystem.colors.bg.secondary)}>
       <Sidebar 
         isCollapsed={sidebarCollapsed} 
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} 
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        currentPage={currentPage}
+        onNavigate={onNavigate}
       />
       
       <div className="flex-1 flex flex-col overflow-hidden">

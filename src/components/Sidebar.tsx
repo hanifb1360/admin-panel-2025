@@ -7,7 +7,8 @@ import {
   Settings,
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { componentVariants, designSystem } from '../lib/designSystem';
@@ -20,6 +21,7 @@ interface SidebarProps {
 const navigation = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/', current: true },
   { name: 'Users', icon: Users, href: '/users', current: false },
+  { name: 'Forms', icon: FileText, href: '/forms', current: false },
   { name: 'Orders', icon: ShoppingCart, href: '/orders', current: false },
   { name: 'Products', icon: Package, href: '/products', current: false },
   { name: 'Analytics', icon: BarChart3, href: '/analytics', current: false },

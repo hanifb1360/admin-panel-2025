@@ -229,6 +229,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       success: tw.border.success,
     };
 
+    // Create a custom style object for the select background
+    const selectStyle = {
+      backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'right 0.5rem center',
+      backgroundSize: '1.5em 1.5em',
+    };
+
     return (
       <div className="w-full">
         {label && (
@@ -246,15 +254,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         <select
           ref={ref}
           id={selectId}
+          style={selectStyle}
           className={cn(
             'w-full border rounded-lg py-2 px-3 text-sm transition-colors duration-200',
-            tw.bg.primary,
             tw.text.primary,
             'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
             'disabled:bg-gray-50 dark:disabled:bg-gray-700 disabled:text-gray-500 dark:disabled:text-gray-400 disabled:cursor-not-allowed',
             'appearance-none',
-            'bg-[url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")] dark:bg-[url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%23a1a1aa\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")]',
-            'bg-no-repeat bg-right-2 bg-center pr-10',
+            'bg-white dark:bg-gray-900',
+            'pr-10',
             variantClasses[variant],
             hasError && 'focus:ring-red-500',
             isSuccess && 'focus:ring-green-500',
@@ -263,7 +271,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
         >
           {placeholder && (
-            <option value="" disabled>
+            <option value="" disabled className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
               {placeholder}
             </option>
           )}
@@ -272,6 +280,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               key={option.value}
               value={option.value}
               disabled={option.disabled}
+              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
             >
               {option.label}
             </option>

@@ -515,6 +515,36 @@ export const componentVariants = {
     ].join(' '),
   },
 
+  // Select variants
+  select: {
+    default: [
+      'w-full px-3 py-2',
+      'bg-white dark:bg-gray-900',
+      tw.text.primary,
+      tw.border.secondary,
+      'border',
+      tw.effects.rounded.lg,
+      tw.states.focus.ring,
+      tw.states.focus.border,
+      tw.effects.transition.colors,
+      'appearance-none',
+      'bg-no-repeat bg-right-2 bg-center pr-10',
+    ].join(' '),
+    error: [
+      'w-full px-3 py-2',
+      'bg-white dark:bg-gray-900',
+      tw.text.primary,
+      tw.border.error,
+      'border',
+      tw.effects.rounded.lg,
+      'focus:ring-2 focus:ring-red-500',
+      tw.states.focus.border,
+      tw.effects.transition.colors,
+      'appearance-none',
+      'bg-no-repeat bg-right-2 bg-center pr-10',
+    ].join(' '),
+  },
+
   // Icon containers
   iconContainer: {
     small: [

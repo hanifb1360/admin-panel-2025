@@ -4,8 +4,8 @@ import type { UseFormReturn, FieldValues, Path } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
 
-export interface UseFormWithValidationOptions<T extends Record<string, unknown>> {
-  schema: z.ZodSchema<T>;
+export interface UseFormWithValidationOptions<T extends FieldValues> {
+  schema: z.ZodType<T>;
   defaultValues?: Partial<T>;
   mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
   reValidateMode?: 'onSubmit' | 'onBlur' | 'onChange';
@@ -27,7 +27,7 @@ export interface FormValidationState {
   errorCount: number;
 }
 
-export interface UseFormWithValidationReturn<T extends Record<string, unknown>> extends UseFormReturn<T> {
+export interface UseFormWithValidationReturn<T extends FieldValues> extends UseFormReturn<T> {
   state: FormValidationState;
   submitWithValidation: (onSubmit: (data: T) => Promise<void> | void) => Promise<void>;
   resetForm: () => void;
@@ -43,7 +43,7 @@ export interface UseFormWithValidationReturn<T extends Record<string, unknown>> 
   setAutoSave: (enabled: boolean) => void;
 }
 
-export function useFormWithValidation<T extends Record<string, unknown>>({
+export function useFormWithValidation<T extends FieldValues>({
   schema,
   defaultValues,
   mode = 'onSubmit',
@@ -57,9 +57,10 @@ export function useFormWithValidation<T extends Record<string, unknown>>({
   const [autoSave, setAutoSave] = useState(false);
   const [draftKey] = useState(() => `form-draft-${Date.now()}`);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const form = useForm<T>({
-    resolver: zodResolver(schema) as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema as any) as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     defaultValues: defaultValues as any,
     mode,
     reValidateMode,
@@ -110,12 +111,13 @@ export function useFormWithValidation<T extends Record<string, unknown>>({
   }, [form, draftKey]);
 
   const resetForm = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     form.reset(defaultValues as any);
     localStorage.removeItem(draftKey);
   }, [form, defaultValues, draftKey]);
 
   const validateField = useCallback(async (fieldName: keyof T): Promise<boolean> => {
-    const result = await form.trigger(fieldName as any);
+    const result = await form.trigger(fieldName as Path<T>);
     return result;
   }, [form]);
 
@@ -130,11 +132,11 @@ export function useFormWithValidation<T extends Record<string, unknown>>({
   }, [form.formState.errors]);
 
   const setFieldError = useCallback((fieldName: keyof T, error: string) => {
-    form.setError(fieldName as any, { type: 'manual', message: error });
+    form.setError(fieldName as Path<T>, { type: 'manual', message: error });
   }, [form]);
 
   const clearFieldError = useCallback((fieldName: keyof T) => {
-    form.clearErrors(fieldName as any);
+    form.clearErrors(fieldName as Path<T>);
   }, [form]);
 
   const clearAllErrors = useCallback(() => {
@@ -159,7 +161,7 @@ export function useFormWithValidation<T extends Record<string, unknown>>({
   }, [form, draftKey]);
 
   return {
-    ...form,
+    ...(form as unknown as UseFormReturn<T>),
     state,
     submitWithValidation,
     resetForm,
@@ -176,26 +178,26 @@ export function useFormWithValidation<T extends Record<string, unknown>>({
   };
 }
 
-export type FormReturn<T extends Record<string, unknown>> = UseFormWithValidationReturn<T>;
+export type FormReturn<T extends FieldValues> = UseFormWithValidationReturn<T>;
 
 // Helper function to get field error
-export function getFieldError(form: UseFormReturn<Record<string, unknown>>, fieldName: string): string | undefined {
+export function getFieldError(form: UseFormReturn<FieldValues>, fieldName: string): string | undefined {
   const fieldError = form.formState.errors[fieldName];
   return fieldError?.message as string | undefined;
 }
 
 // Helper function to check if field is touched
-export function isFieldTouched(form: UseFormReturn<Record<string, unknown>>, fieldName: string): boolean {
+export function isFieldTouched(form: UseFormReturn<FieldValues>, fieldName: string): boolean {
   return !!form.formState.touchedFields[fieldName];
 }
 
 // Helper function to check if field is dirty
-export function isFieldDirty(form: UseFormReturn<Record<string, unknown>>, fieldName: string): boolean {
+export function isFieldDirty(form: UseFormReturn<FieldValues>, fieldName: string): boolean {
   return !!form.formState.dirtyFields[fieldName];
 }
 
 // Advanced form state management hook
-export function useFormPersistence<T extends Record<string, unknown>>(
+export function useFormPersistence<T extends FieldValues>(
   form: UseFormReturn<T>,
   key: string,
   options: {
@@ -278,7 +280,7 @@ export function useFormPersistence<T extends Record<string, unknown>>(
 }
 
 // Hook for multi-step forms
-export function useMultiStepForm<T extends Record<string, unknown>>(
+export function useMultiStepForm<T extends FieldValues>(
   steps: Array<{
     name: string;
     schema: z.ZodSchema<unknown>;
@@ -302,7 +304,7 @@ export function useMultiStepForm<T extends Record<string, unknown>>(
     const fieldsToValidate = currentStepData.fields;
     
     // Validate current step fields
-    const isValid = await form.trigger(fieldsToValidate as any);
+    const isValid = await form.trigger(fieldsToValidate as Path<T>[]);
     
     if (isValid) {
       setCompletedSteps(prev => new Set([...prev, currentStep]));

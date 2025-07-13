@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Users from './pages/Users';
 import Forms from './pages/Forms';
+import Analytics from './pages/Analytics';
 import { mockWebSocketServer } from './lib/mockWebSocketServer';
 
 const queryClient = new QueryClient();
@@ -29,6 +30,8 @@ function App() {
         return <Users />;
       case 'forms':
         return <Forms />;
+      case 'analytics':
+        return <Analytics />;
       case 'dashboard':
       default:
         return <Dashboard />;
@@ -41,6 +44,8 @@ function App() {
         return 'Users';
       case 'forms':
         return 'Forms';
+      case 'analytics':
+        return 'Analytics';
       case 'dashboard':
       default:
         return 'Dashboard';

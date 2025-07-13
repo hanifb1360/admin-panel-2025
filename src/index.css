@@ -69,4 +69,229 @@ body {
   .input-field {
     @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100;
   }
+
+  /* Advanced chart components */
+  .chart-container {
+    @apply relative bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6;
+  }
+
+  .chart-tooltip {
+    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3 text-sm;
+  }
+
+  .chart-legend {
+    @apply flex flex-wrap gap-4 mb-4;
+  }
+
+  .chart-legend-item {
+    @apply flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300;
+  }
+
+  .chart-legend-color {
+    @apply w-3 h-3 rounded-full;
+  }
+
+  .chart-axis-label {
+    @apply text-sm font-medium text-gray-600 dark:text-gray-400;
+  }
+
+  .chart-grid-line {
+    @apply stroke-gray-200 dark:stroke-gray-700 opacity-50;
+  }
+
+  .chart-focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800;
+  }
+
+  /* Chart animations */
+  .chart-animate-enter {
+    animation: chartFadeInUp 0.6s ease-out forwards;
+  }
+
+  .chart-animate-bar {
+    animation: chartBarGrow 1.2s ease-out forwards;
+  }
+
+  .chart-animate-line {
+    animation: chartLineDraw 1.5s ease-out forwards;
+  }
+
+  .chart-animate-pulse {
+    animation: chartPulse 2s ease-in-out infinite;
+  }
+
+  /* Treemap specific styles */
+  .treemap-node {
+    @apply transition-all duration-300 cursor-pointer;
+  }
+
+  .treemap-node:hover {
+    @apply ring-2 ring-blue-500 ring-opacity-50 filter brightness-110;
+  }
+
+  .treemap-label {
+    @apply pointer-events-none select-none font-medium;
+  }
+
+  /* Radar chart specific styles */
+  .radar-grid-line {
+    @apply stroke-gray-300 dark:stroke-gray-600 opacity-60;
+  }
+
+  .radar-axis-line {
+    @apply stroke-gray-400 dark:stroke-gray-500 opacity-70;
+  }
+
+  .radar-point {
+    @apply transition-all duration-200 cursor-pointer;
+  }
+
+  .radar-point:hover {
+    @apply transform scale-150 filter drop-shadow-lg;
+  }
+
+  .radar-area {
+    @apply transition-all duration-300;
+  }
+
+  .radar-area:hover {
+    @apply opacity-90 filter brightness-110;
+  }
+
+  /* Parallel coordinates specific styles */
+  .parallel-axis {
+    @apply stroke-gray-400 dark:stroke-gray-500;
+  }
+
+  .parallel-line {
+    @apply transition-all duration-200 cursor-pointer;
+  }
+
+  .parallel-line:hover {
+    @apply filter drop-shadow-lg;
+  }
+
+  .parallel-dimension-label {
+    @apply font-medium text-gray-700 dark:text-gray-300;
+  }
+
+  /* Advanced animation keyframes */
+  .chart-animate-treemap {
+    animation: treemapGrow 1s ease-out forwards;
+  }
+
+  .chart-animate-radar {
+    animation: radarSweep 1.5s ease-out forwards;
+  }
+
+  .chart-animate-parallel {
+    animation: parallelDraw 2s ease-out forwards;
+  }
+
+  /* High contrast mode overrides */
+  .chart-high-contrast {
+    @apply contrast-200 saturate-200;
+  }
+
+  .chart-high-contrast .chart-tooltip {
+    @apply bg-black text-white border-white;
+  }
+
+  .chart-high-contrast .chart-legend-item {
+    @apply text-black dark:text-white;
+  }
+}
+
+/* Chart animations keyframes */
+@keyframes chartFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chartBarGrow {
+  from {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  to {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes chartLineDraw {
+  from {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chartPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Additional animation keyframes for new chart types */
+@keyframes treemapGrow {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes radarSweep {
+  from {
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes parallelDraw {
+  from {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+  }
+  to {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .chart-animate-enter,
+  .chart-animate-bar,
+  .chart-animate-line,
+  .chart-animate-pulse,
+  .chart-animate-treemap,
+  .chart-animate-radar,
+  .chart-animate-parallel {
+    animation: none;
+  }
+  
+  .heatmap-cell {
+    transition: none;
+  }
 }

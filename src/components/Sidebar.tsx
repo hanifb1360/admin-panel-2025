@@ -18,6 +18,7 @@ interface SidebarProps {
   onToggle: () => void;
   currentPage?: string;
   onNavigate?: (page: string) => void;
+  onNavigationHover?: (page: string) => void;
 }
 
 const navigation = [
@@ -30,7 +31,13 @@ const navigation = [
   { name: 'Settings', icon: Settings, page: 'settings' },
 ];
 
-export default function Sidebar({ isCollapsed, onToggle, currentPage, onNavigate }: SidebarProps) {
+export default function Sidebar({ 
+  isCollapsed, 
+  onToggle, 
+  currentPage, 
+  onNavigate, 
+  onNavigationHover 
+}: SidebarProps) {
   return (
     <div className={cn(
       componentVariants.sidebar.container,
@@ -82,6 +89,7 @@ export default function Sidebar({ isCollapsed, onToggle, currentPage, onNavigate
             <button
               key={item.name}
               onClick={() => onNavigate?.(item.page)}
+              onMouseEnter={() => onNavigationHover?.(item.page)}
               className={cn(
                 designSystem.layout.flex.start,
                 designSystem.spacing.gap.md,

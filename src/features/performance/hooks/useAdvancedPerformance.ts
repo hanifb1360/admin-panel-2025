@@ -1,3 +1,10 @@
+// Extend Window interface for global FCP/LCP storage
+declare global {
+  interface Window {
+    __INITIAL_FCP?: number;
+    __INITIAL_LCP?: number;
+  }
+}
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 // Extend Performance interface for memory property
@@ -56,8 +63,8 @@ export function useAdvancedPerformance(options: UseAdvancedPerformanceOptions = 
 
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     renderTime: 0,
-    firstContentfulPaint: null,
-    largestContentfulPaint: null,
+    firstContentfulPaint: typeof window !== 'undefined' && window.__INITIAL_FCP !== undefined ? window.__INITIAL_FCP : null,
+    largestContentfulPaint: typeof window !== 'undefined' && window.__INITIAL_LCP !== undefined ? window.__INITIAL_LCP : null,
     firstInputDelay: null,
     cumulativeLayoutShift: null,
     memoryUsage: null,
@@ -109,28 +116,33 @@ export function useAdvancedPerformance(options: UseAdvancedPerformanceOptions = 
 
     const handlePerformanceEntry = (list: PerformanceObserverEntryList) => {
       const entries = list.getEntries();
-      
       entries.forEach(entry => {
         setMetrics(prev => {
           const updated = { ...prev };
-          
           switch (entry.entryType) {
             case 'paint':
               if (entry.name === 'first-contentful-paint') {
-                updated.firstContentfulPaint = entry.startTime;
+                if (typeof window !== 'undefined' && window.__INITIAL_FCP === undefined) {
+                  window.__INITIAL_FCP = entry.startTime;
+                }
+                updated.firstContentfulPaint = (typeof window !== 'undefined' && window.__INITIAL_FCP !== undefined)
+                  ? window.__INITIAL_FCP
+                  : entry.startTime;
               }
               break;
-            
             case 'largest-contentful-paint':
-              updated.largestContentfulPaint = entry.startTime;
+              if (typeof window !== 'undefined' && window.__INITIAL_LCP === undefined) {
+                window.__INITIAL_LCP = entry.startTime;
+              }
+              updated.largestContentfulPaint = (typeof window !== 'undefined' && window.__INITIAL_LCP !== undefined)
+                ? window.__INITIAL_LCP
+                : entry.startTime;
               break;
-            
             case 'first-input': {
               const firstInputEntry = entry as FirstInputEntry;
               updated.firstInputDelay = firstInputEntry.processingStart - firstInputEntry.startTime;
               break;
             }
-            
             case 'layout-shift': {
               const layoutShiftEntry = entry as LayoutShiftEntry;
               if (!layoutShiftEntry.hadRecentInput) {
@@ -140,7 +152,6 @@ export function useAdvancedPerformance(options: UseAdvancedPerformanceOptions = 
               break;
             }
           }
-          
           return updated;
         });
       });

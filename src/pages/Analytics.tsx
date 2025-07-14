@@ -2,13 +2,22 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { 
+  BarChart as RechartsBarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
+import { 
   LineChart, 
   PieChart, 
   AreaChart, 
   chartColors, 
   formatters 
 } from '../components/charts';
-import AdvancedChartsDemo from '../components/charts/advanced/AdvancedChartsDemo';
+import AdvancedChartsDemo from '../components/charts/ChartsDemo';
 import { 
   fetchRevenueData, 
   fetchUserGrowthData, 
@@ -255,69 +264,32 @@ export default function Analytics() {
           />
         </ChartErrorBoundary>
 
-        <motion.div 
-          className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        >
-          <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-gray-100">Sales by Region</h3>
-          
-          <div className="space-y-4">
-            {[
-              { region: 'North America', sales: 1284560, percentage: 42.3, color: '#3B82F6' },
-              { region: 'Europe', sales: 956780, percentage: 31.5, color: '#10B981' },
-              { region: 'Asia Pacific', sales: 634290, percentage: 20.9, color: '#F59E0B' },
-              { region: 'Latin America', sales: 124380, percentage: 4.1, color: '#EF4444' },
-              { region: 'Africa', sales: 36990, percentage: 1.2, color: '#8B5CF6' }
-            ].map((item, index) => (
-              <motion.div 
-                key={item.region}
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-              >
-                <div className="w-32 text-sm font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">
-                  {item.region}
-                </div>
-                
-                <div className="flex-1 relative">
-                  <div className="h-8 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden relative">
-                    <motion.div
-                      className="h-full rounded-lg flex items-center justify-end pr-3"
-                      style={{ backgroundColor: item.color }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.percentage}%` }}
-                      transition={{ duration: 1, delay: 1 + index * 0.1, ease: "easeOut" }}
-                    >
-                      <span className="text-white text-xs font-medium">
-                        {formatters.currency(item.sales)}
-                      </span>
-                    </motion.div>
-                  </div>
-                  
-                  <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    {item.percentage}% of total sales
-                  </div>
-                </div>
-                
-                <div className="w-20 text-right text-sm font-semibold text-gray-900 dark:text-gray-100 flex-shrink-0">
-                  {formatters.currency(item.sales)}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          
-          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Total Revenue</span>
-              <span className="font-semibold text-gray-900 dark:text-gray-100">
-                {formatters.currency(1284560 + 956780 + 634290 + 124380 + 36990)}
-              </span>
+        <ChartErrorBoundary fallback={<LoadingSpinner />}>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Sales by Region</h3>
+            <div style={{ height: 350 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsBarChart
+                  data={[
+                    { region: 'North America', sales: 1284560 },
+                    { region: 'Europe', sales: 956780 },
+                    { region: 'Asia Pacific', sales: 634290 },
+                    { region: 'Latin America', sales: 124380 },
+                    { region: 'Africa', sales: 36990 }
+                  ]}
+                  layout="vertical"
+                  margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="region" type="category" width={110} />
+                  <Tooltip formatter={(value) => [formatters.currency(Number(value)), 'Sales']} />
+                  <Bar dataKey="sales" fill={chartColors.primary[0]} />
+                </RechartsBarChart>
+              </ResponsiveContainer>
             </div>
           </div>
-        </motion.div>
+        </ChartErrorBoundary>
       </div>
 
       {/* Performance Metrics */}

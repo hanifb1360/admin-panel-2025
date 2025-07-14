@@ -7,8 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
-  Cell
+  Legend
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -46,7 +45,6 @@ interface BarChartProps {
   enableGrid?: boolean;
   enableTooltip?: boolean;
   enableLegend?: boolean;
-  barColors?: string[];
   formatTooltip?: (value: string | number, name: string) => [string, string];
   ariaDescription?: string;
   layout?: 'horizontal' | 'vertical';
@@ -105,13 +103,21 @@ export default function BarChart({
   enableGrid = true,
   enableTooltip = true,
   enableLegend = true,
-  barColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
   formatTooltip,
   ariaDescription,
-  layout = 'vertical'
+  layout = 'horizontal'
 }: BarChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = React.useState(false);
+
+  // Debug logging
+  console.log('BarChart Props:', {
+    data,
+    xKey,
+    yKeys,
+    title,
+    layout
+  });
 
   // Intersection Observer for entrance animations
   useEffect(() => {
@@ -135,6 +141,16 @@ export default function BarChart({
   const chartId = React.useId();
   const titleId = title ? `${chartId}-title` : undefined;
   const descId = ariaDescription ? `${chartId}-desc` : undefined;
+
+  if (!data || data.length === 0) {
+    return (
+      <div className={cn(componentVariants.card.default, 'overflow-hidden', className)}>
+        <div className="flex items-center justify-center h-64">
+          <p className="text-gray-500 dark:text-gray-400">No data available</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -169,7 +185,12 @@ export default function BarChart({
           <RechartsBarChart
             data={data}
             layout={layout}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ 
+              top: 5, 
+              right: 30, 
+              left: layout === 'horizontal' ? 120 : 20, 
+              bottom: 5 
+            }}
           >
             {enableGrid && (
               <CartesianGrid 
@@ -180,8 +201,8 @@ export default function BarChart({
             )}
             
             <XAxis
-              type={layout === 'vertical' ? 'category' : 'number'}
-              dataKey={layout === 'vertical' ? xKey : undefined}
+              type={layout === 'horizontal' ? 'number' : 'category'}
+              dataKey={layout === 'horizontal' ? undefined : xKey}
               className="text-gray-600 dark:text-gray-400"
               fontSize={12}
               tickLine={false}
@@ -190,13 +211,14 @@ export default function BarChart({
             />
             
             <YAxis
-              type={layout === 'vertical' ? 'number' : 'category'}
+              type={layout === 'horizontal' ? 'category' : 'number'}
               dataKey={layout === 'horizontal' ? xKey : undefined}
               className="text-gray-600 dark:text-gray-400"
               fontSize={12}
               tickLine={false}
               axisLine={false}
               dx={-10}
+              width={layout === 'horizontal' ? 110 : undefined}
             />
             
             {enableTooltip && (
@@ -206,6 +228,7 @@ export default function BarChart({
               />
             )}
             
+            {/* Temporarily disabled legend
             {enableLegend && (
               <Legend
                 wrapperStyle={{
@@ -215,26 +238,23 @@ export default function BarChart({
                 iconType="rect"
               />
             )}
+            */}
             
-            {yKeys.map((yKey, index) => (
-              <Bar
-                key={yKey.key}
-                dataKey={yKey.key}
-                name={yKey.name}
-                fill={yKey.color}
-                radius={[4, 4, 0, 0]}
-                animationBegin={enableAnimation ? index * 100 : 0}
-                animationDuration={enableAnimation ? 1000 : 0}
-                animationEasing="ease-out"
-              >
-                {data.map((_, entryIndex) => (
-                  <Cell 
-                    key={`cell-${entryIndex}`} 
-                    fill={barColors[entryIndex % barColors.length]} 
-                  />
-                ))}
-              </Bar>
-            ))}
+            {yKeys.map((yKey, index) => {
+              console.log('Rendering Bar:', yKey);
+              return (
+                <Bar
+                  key={yKey.key}
+                  dataKey={yKey.key}
+                  name={yKey.name}
+                  fill={yKey.color}
+                  radius={layout === 'horizontal' ? [0, 4, 4, 0] : [4, 4, 0, 0]}
+                  animationBegin={enableAnimation ? index * 100 : 0}
+                  animationDuration={enableAnimation ? 1000 : 0}
+                  animationEasing="ease-out"
+                />
+              );
+            })}
           </RechartsBarChart>
         </ResponsiveContainer>
       </div>

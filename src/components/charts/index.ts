@@ -3,13 +3,15 @@ export { default as BarChart } from './BarChart';
 export { default as PieChart } from './PieChart';
 export { default as AreaChart } from './AreaChart';
 
-// Advanced components with animations and accessibility
-export { default as AdvancedAnimatedChart } from './advanced/AdvancedAnimatedChart';
-export { default as AdvancedHeatmap } from './advanced/AdvancedHeatmap';
-export { default as AdvancedChartsDemo } from './advanced/AdvancedChartsDemo';
-export { default as AdvancedTreemap } from './advanced/AdvancedTreemap';
-export { default as AdvancedRadarChart } from './advanced/AdvancedRadarChart';
-export { default as AdvancedParallelCoordinates } from './advanced/AdvancedParallelCoordinates';
+// Additional chart components
+export { default as AnimatedChart } from './AnimatedChart';
+export { default as Heatmap } from './Heatmap';
+export { default as ChartsDemo } from './ChartsDemo';
+export { default as Treemap } from './Treemap';
+export { default as RadarChart } from './RadarChart';
+export { default as ParallelCoordinates } from './ParallelCoordinates';
+export { default as EnhancedLineChart } from './EnhancedLineChart';
+export { default as VictoryChart } from './VictoryChart';
 
 // Chart color palettes for consistent theming
 export const chartColors = {

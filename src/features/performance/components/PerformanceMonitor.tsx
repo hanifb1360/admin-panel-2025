@@ -147,6 +147,7 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
         </motion.div>
       )}
 
+      {/*
       <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
         <div className="flex gap-2">
           <button
@@ -163,6 +164,7 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
           </button>
         </div>
       </div>
+      */}
     </motion.div>
   );
 };

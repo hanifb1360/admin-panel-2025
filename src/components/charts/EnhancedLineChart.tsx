@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '../../../lib/utils';
-import { chartColors, chartA11yConfig, formatters } from '../index';
+import { cn } from '../../lib/utils';
+import { chartColors, chartA11yConfig, formatters } from './index';
 
 interface DataPoint {
   [key: string]: string | number | Date | undefined;

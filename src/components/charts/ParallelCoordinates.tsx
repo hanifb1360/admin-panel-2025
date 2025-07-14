@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../../lib/utils';
-import { chartColors, chartA11yConfig } from '../index';
+import { cn } from '../../lib/utils';
+import { chartColors, chartA11yConfig } from './index';
 
 interface ParallelCoordinatesData {
   id: string | number;

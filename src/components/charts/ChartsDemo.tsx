@@ -1,15 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  AdvancedAnimatedChart, 
-  AdvancedHeatmap,
-  AdvancedTreemap,
-  AdvancedRadarChart,
-  AdvancedParallelCoordinates,
-  chartColors,
-  formatters 
-} from '../index';
-import { cn } from '../../../lib/utils';
+import AdvancedAnimatedChart from './AnimatedChart';
+import AdvancedHeatmap from './Heatmap';
+import AdvancedTreemap from './Treemap';
+import AdvancedRadarChart from './RadarChart';
+import AdvancedParallelCoordinates from './ParallelCoordinates';
+import { chartColors, formatters } from './index';
+import { cn } from '../../lib/utils';
 
 const AdvancedChartsDemo: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('line');

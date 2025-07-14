@@ -1,15 +1,18 @@
-import { Search, User } from 'lucide-react';
+import { Search, User, Activity } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { componentVariants, designSystem } from '../lib/designSystem';
 import ThemeToggle from './ThemeToggle';
 import ConnectionStatus from './ConnectionStatus';
 import RealTimeNotifications from './RealTimeNotifications';
+import { usePerformanceMonitor } from '../contexts/usePerformanceMonitor';
 
 interface HeaderProps {
   title: string;
 }
 
 export default function Header({ title }: HeaderProps) {
+  const { isVisible, toggle } = usePerformanceMonitor();
+
   return (
     <header className={cn(
       designSystem.colors.bg.white,
@@ -42,6 +45,21 @@ export default function Header({ title }: HeaderProps) {
           
           {/* Theme Toggle */}
           <ThemeToggle />
+          
+          {/* Performance Monitor Toggle */}
+          <button
+            onClick={toggle}
+            className={cn(
+              componentVariants.iconContainer.small,
+              'transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700',
+              isVisible 
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400' 
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+            )}
+            title={isVisible ? 'Hide Performance Monitor' : 'Show Performance Monitor'}
+          >
+            <Activity className="w-4 h-4" />
+          </button>
           
           {/* Connection Status */}
           <ConnectionStatus />

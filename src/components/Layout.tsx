@@ -9,9 +9,16 @@ interface LayoutProps {
   title?: string;
   currentPage?: string;
   onNavigate?: (page: string) => void;
+  onNavigationHover?: (page: string) => void;
 }
 
-export default function Layout({ children, title = 'Dashboard', currentPage, onNavigate }: LayoutProps) {
+export default function Layout({ 
+  children, 
+  title = 'Dashboard', 
+  currentPage, 
+  onNavigate,
+  onNavigationHover 
+}: LayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
@@ -21,6 +28,7 @@ export default function Layout({ children, title = 'Dashboard', currentPage, onN
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         currentPage={currentPage}
         onNavigate={onNavigate}
+        onNavigationHover={onNavigationHover}
       />
       
       <div className="flex-1 flex flex-col overflow-hidden">

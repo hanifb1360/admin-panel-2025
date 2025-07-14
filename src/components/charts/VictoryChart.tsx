@@ -12,8 +12,8 @@ import {
   VictoryTheme,
   VictoryScatter
 } from 'victory';
-import { cn } from '../../../lib/utils';
-import { chartColors, chartA11yConfig } from '../index';
+import { cn } from '../../lib/utils';
+import { chartColors, chartA11yConfig } from './index';
 
 interface DataPoint {
   x: string | number | Date;

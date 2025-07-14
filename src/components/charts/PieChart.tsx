@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   PieChart as RechartsPieChart,
   Pie,
@@ -57,42 +57,6 @@ const DEFAULT_COLORS = [
   '#f97316', // orange
 ];
 
-const CustomTooltip = ({ active, payload, formatTooltip }: CustomTooltipProps) => {
-  if (active && payload && payload.length) {
-    const data = payload[0];
-    const [value, name] = formatTooltip 
-      ? formatTooltip(data.value, data.name)
-      : [data.value.toString(), data.name];
-
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.8 }}
-        transition={{ duration: 0.2 }}
-        className={cn(
-          componentVariants.card.default,
-          'p-3 shadow-lg border-0',
-          'bg-white dark:bg-gray-800',
-          'ring-1 ring-gray-200 dark:ring-gray-700'
-        )}
-      >
-        <div className="flex items-center gap-2">
-          <div 
-            className="w-3 h-3 rounded-full" 
-            style={{ backgroundColor: data.color }}
-            aria-hidden="true"
-          />
-          <span className={cn(designSystem.typography.body.sm, designSystem.colors.text.primary)}>
-            {name}: {value}
-          </span>
-        </div>
-      </motion.div>
-    );
-  }
-  return null;
-};
-
 interface CustomLabelProps {
   cx?: number;
   cy?: number;
@@ -148,11 +112,48 @@ export default function PieChart({
   const chartRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = React.useState(false);
 
-  // Add colors to data if not provided
-  const dataWithColors = data.map((item, index) => ({
+  // Add colors to data if not provided (memoized for performance)
+  const dataWithColors = useMemo(() => data.map((item, index) => ({
     ...item,
     color: item.color || colors[index % colors.length]
-  }));
+  })), [data, colors]);
+
+  // Memoized custom tooltip to prevent unnecessary re-renders
+  const MemoizedCustomTooltip = useCallback(({ active, payload, formatTooltip }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+      const data = payload[0];
+      const [value, name] = formatTooltip 
+        ? formatTooltip(data.value, data.name)
+        : [data.value.toString(), data.name];
+
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.2 }}
+          className={cn(
+            componentVariants.card.default,
+            'p-3 shadow-lg border-0',
+            'bg-white dark:bg-gray-800',
+            'ring-1 ring-gray-200 dark:ring-gray-700'
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <div 
+              className="w-3 h-3 rounded-full" 
+              style={{ backgroundColor: data.color }}
+              aria-hidden="true"
+            />
+            <span className={cn(designSystem.typography.body.sm, designSystem.colors.text.primary)}>
+              {name}: {value}
+            </span>
+          </div>
+        </motion.div>
+      );
+    }
+    return null;
+  }, []);
 
   // Intersection Observer for entrance animations
   useEffect(() => {
@@ -233,7 +234,7 @@ export default function PieChart({
             
             {enableTooltip && (
               <Tooltip
-                content={<CustomTooltip formatTooltip={formatTooltip} />}
+                content={<MemoizedCustomTooltip formatTooltip={formatTooltip} />}
               />
             )}
             

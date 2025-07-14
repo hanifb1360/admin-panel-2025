@@ -31,9 +31,16 @@ const Forms = createAdvancedLazyComponent(
   { priority: 'normal' }
 );
 
+
 const Analytics = createAdvancedLazyComponent(
   () => import('./pages/Analytics'),
   'Analytics',
+  { priority: 'low' }
+);
+
+const Settings = createAdvancedLazyComponent(
+  () => import('./pages/Settings'),
+  'Settings',
   { priority: 'low' }
 );
 
@@ -120,6 +127,8 @@ function App() {
               return <Forms />;
             case 'analytics':
               return <Analytics />;
+            case 'settings':
+              return <Settings />;
             case 'dashboard':
             default:
               return <Dashboard />;
@@ -137,6 +146,8 @@ function App() {
         return 'Forms';
       case 'analytics':
         return 'Analytics';
+      case 'settings':
+        return 'Settings';
       case 'dashboard':
       default:
         return 'Dashboard';

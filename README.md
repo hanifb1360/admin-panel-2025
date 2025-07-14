@@ -55,27 +55,6 @@ A comprehensive, modern admin panel and dashboard built with React, TypeScript, 
 | **Vite** | Build Tool | 7.x |
 | **Lucide React** | Icons | Latest |
 
-## 📁 Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-│   ├── Layout.tsx      # Main layout wrapper
-│   ├── Sidebar.tsx     # Navigation sidebar
-│   ├── Header.tsx      # Top navigation bar
-│   ├── DataTable.tsx   # Advanced data table
-│   └── StatsCard.tsx   # Statistics display card
-├── pages/              # Page components
-│   ├── Dashboard.tsx   # Main dashboard
-│   └── Users.tsx       # User management
-├── lib/                # Utilities and services
-│   ├── api.ts          # API service functions
-│   └── utils.ts        # Helper functions
-├── types/              # TypeScript definitions
-│   └── index.ts        # Type definitions
-├── hooks/              # Custom React hooks
-└── assets/             # Static assets
-```
 
 ## 🚀 Quick Start
 

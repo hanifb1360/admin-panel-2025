@@ -43,30 +43,35 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
     {
       icon: Zap,
       label: 'Render Time',
+      tooltip: 'Time taken for the UI to render after a state change or navigation.',
       value: formatTime(metrics.renderTime),
       color: getPerformanceColor(metrics.renderTime, { good: 16, poor: 50 })
     },
     {
       icon: Activity,
       label: 'FCP',
+      tooltip: 'First Contentful Paint: Time when the first text or image is painted. Lower is better.',
       value: formatTime(metrics.firstContentfulPaint),
       color: getPerformanceColor(metrics.firstContentfulPaint, { good: 1800, poor: 3000 })
     },
     {
       icon: Cpu,
       label: 'LCP',
+      tooltip: 'Largest Contentful Paint: Time when the largest content element is visible. Lower is better.',
       value: formatTime(metrics.largestContentfulPaint),
       color: getPerformanceColor(metrics.largestContentfulPaint, { good: 2500, poor: 4000 })
     },
     {
       icon: HardDrive,
       label: 'Memory',
+      tooltip: 'Current JavaScript heap memory usage (MB). High or increasing values may indicate a memory leak.',
       value: formatBytes(currentMemoryUsage),
       color: isLeakDetected ? 'text-red-500' : getPerformanceColor(currentMemoryUsage, { good: 20, poor: 50 })
     },
     {
       icon: Network,
       label: 'Connection',
+      tooltip: 'Network connection type (e.g., 4g, wifi, etc.) as reported by the browser.',
       value: metrics.connectionType || 'Unknown',
       color: 'text-blue-500'
     }
@@ -101,7 +106,13 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Icon className="w-4 h-4 text-gray-400" />
-                <span className={cn(tw.typography.body.xs, tw.text.secondary)}>
+                <span
+                  className={cn(tw.typography.body.xs, tw.text.secondary, 'cursor-help', 'relative')}
+                  tabIndex={0}
+                  title={item.tooltip}
+                  aria-label={item.tooltip}
+                  style={{ textDecoration: 'underline dotted', textUnderlineOffset: 2 }}
+                >
                   {item.label}
                 </span>
               </div>

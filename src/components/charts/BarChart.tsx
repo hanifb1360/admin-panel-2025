@@ -6,8 +6,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  Legend
+  ResponsiveContainer
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
@@ -44,7 +43,6 @@ interface BarChartProps {
   enableAnimation?: boolean;
   enableGrid?: boolean;
   enableTooltip?: boolean;
-  enableLegend?: boolean;
   formatTooltip?: (value: string | number, name: string) => [string, string];
   ariaDescription?: string;
   layout?: 'horizontal' | 'vertical';
@@ -102,22 +100,12 @@ export default function BarChart({
   enableAnimation = true,
   enableGrid = true,
   enableTooltip = true,
-  enableLegend = true,
   formatTooltip,
   ariaDescription,
   layout = 'horizontal'
 }: BarChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = React.useState(false);
-
-  // Debug logging
-  console.log('BarChart Props:', {
-    data,
-    xKey,
-    yKeys,
-    title,
-    layout
-  });
 
   // Intersection Observer for entrance animations
   useEffect(() => {
@@ -240,21 +228,18 @@ export default function BarChart({
             )}
             */}
             
-            {yKeys.map((yKey, index) => {
-              console.log('Rendering Bar:', yKey);
-              return (
-                <Bar
-                  key={yKey.key}
-                  dataKey={yKey.key}
-                  name={yKey.name}
-                  fill={yKey.color}
-                  radius={layout === 'horizontal' ? [0, 4, 4, 0] : [4, 4, 0, 0]}
-                  animationBegin={enableAnimation ? index * 100 : 0}
-                  animationDuration={enableAnimation ? 1000 : 0}
-                  animationEasing="ease-out"
-                />
-              );
-            })}
+            {yKeys.map((yKey, index) => (
+              <Bar
+                key={yKey.key}
+                dataKey={yKey.key}
+                name={yKey.name}
+                fill={yKey.color}
+                radius={layout === 'horizontal' ? [0, 4, 4, 0] : [4, 4, 0, 0]}
+                animationBegin={enableAnimation ? index * 100 : 0}
+                animationDuration={enableAnimation ? 1000 : 0}
+                animationEasing="ease-out"
+              />
+            ))}
           </RechartsBarChart>
         </ResponsiveContainer>
       </div>

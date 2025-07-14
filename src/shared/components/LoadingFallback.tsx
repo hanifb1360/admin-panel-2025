@@ -82,6 +82,9 @@ export const SkeletonLoader: React.FC<{ className?: string }> = ({ className }) 
 
 // Chart skeleton loader
 export const ChartSkeleton: React.FC<{ height?: number }> = ({ height = 300 }) => {
+  // Predefined width classes to avoid dynamic class generation
+  const widthClasses = ['w-2/12', 'w-3/12', 'w-4/12', 'w-5/12', 'w-6/12', 'w-7/12'];
+  
   return (
     <div className={cn(tw.bg.primary, 'rounded-lg p-6 animate-pulse')} style={{ height }}>
       <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3 mb-4"></div>
@@ -89,7 +92,7 @@ export const ChartSkeleton: React.FC<{ height?: number }> = ({ height = 300 }) =
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex items-center space-x-4">
             <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-lg w-8"></div>
-            <div className={`h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-${Math.floor(Math.random() * 6) + 2}/12`}></div>
+            <div className={cn('h-6 bg-gray-200 dark:bg-gray-700 rounded-lg', widthClasses[i % widthClasses.length])}></div>
           </div>
         ))}
       </div>

@@ -1,14 +1,15 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { 
+import {
   BarChart as RechartsBarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Cell
 } from 'recharts';
 import { 
   LineChart, 
@@ -284,7 +285,13 @@ export default function Analytics() {
                   <XAxis type="number" />
                   <YAxis dataKey="region" type="category" width={110} />
                   <Tooltip formatter={(value) => [formatters.currency(Number(value)), 'Sales']} />
-                  <Bar dataKey="sales" fill={chartColors.primary[0]} />
+                  <Bar dataKey="sales">
+                    <Cell fill={chartColors.mixed[0]} /> {/* Blue - North America */}
+                    <Cell fill={chartColors.mixed[1]} /> {/* Emerald - Europe */}
+                    <Cell fill={chartColors.mixed[2]} /> {/* Amber - Asia Pacific */}
+                    <Cell fill={chartColors.mixed[3]} /> {/* Red - Latin America */}
+                    <Cell fill={chartColors.mixed[4]} /> {/* Violet - Africa */}
+                  </Bar>
                 </RechartsBarChart>
               </ResponsiveContainer>
             </div>

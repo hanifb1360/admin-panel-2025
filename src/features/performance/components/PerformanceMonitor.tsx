@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import { tw } from '../../../design-system/utilities/tailwind';
 import { useAdvancedPerformance, useMemoryLeakDetection } from '../hooks/useAdvancedPerformance';
-import { bundleUtils, memoryUtils } from '../utils/performanceUtils';
+// import { bundleUtils, memoryUtils } from '../utils/performanceUtils';
 import { Activity, Cpu, HardDrive, Network, Zap } from 'lucide-react';
 
 interface PerformanceMonitorProps {

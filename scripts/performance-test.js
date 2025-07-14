@@ -79,12 +79,28 @@ try {
   console.error('❌ Build failed:', error.message);
 }
 
+
+function getAllFilesRecursively(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllFilesRecursively(filePath));
+    } else {
+      results.push(filePath);
+    }
+  });
+  return results;
+}
+
 function checkForLazyLoading(dir) {
   try {
-    const files = fs.readdirSync(dir, { recursive: true });
+    const files = getAllFilesRecursively(dir);
     return files.some(file => {
       if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-        const content = fs.readFileSync(path.join(dir, file), 'utf8');
+        const content = fs.readFileSync(file, 'utf8');
         return content.includes('React.lazy') || content.includes('lazy(');
       }
       return false;
@@ -96,10 +112,10 @@ function checkForLazyLoading(dir) {
 
 function checkForPerformanceMonitoring(dir) {
   try {
-    const files = fs.readdirSync(dir, { recursive: true });
+    const files = getAllFilesRecursively(dir);
     return files.some(file => {
       if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-        const content = fs.readFileSync(path.join(dir, file), 'utf8');
+        const content = fs.readFileSync(file, 'utf8');
         return content.includes('useAdvancedPerformance') || 
                content.includes('PerformanceObserver') ||
                content.includes('performance.now');

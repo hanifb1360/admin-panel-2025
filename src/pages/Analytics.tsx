@@ -12,13 +12,17 @@ import {
   Cell
 } from 'recharts';
 import { 
-  LineChart, 
-  PieChart, 
-  AreaChart, 
   chartColors, 
   formatters 
 } from '../components/charts';
 import AdvancedChartsDemo from '../components/charts/ChartsDemo';
+// Lazy load chart components for better performance
+import { 
+  LazyChart,
+  LineChart,
+  PieChart,
+  AreaChart
+} from '../features/lazy-loading';
 import { 
   fetchRevenueData, 
   fetchUserGrowthData, 
@@ -215,54 +219,68 @@ export default function Analytics() {
       {/* Revenue Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
-          <LineChart
-            data={revenueData || []}
-            xKey="month"
-            yKeys={[
-              { key: 'revenue', color: chartColors.primary[0], name: 'Revenue' },
-              { key: 'profit', color: chartColors.success[0], name: 'Profit' },
-              { key: 'expenses', color: chartColors.danger[0], name: 'Expenses' }
+          <LazyChart 
+            height={350} 
+            priority="high" 
+            enableIntersectionObserver={true}
+            prefetchResources={[
+              '/assets/chart-data.json',
+              '/assets/analytics-styles.css'
             ]}
-            title="Revenue Trends"
-            height={350}
-            formatTooltip={(value, name) => [formatters.currency(Number(value)), name]}
-            ariaDescription="Monthly revenue, profit, and expenses data showing upward trend throughout the year"
-            enableAnimation={true}
-          />
+          >
+            <LineChart
+              data={revenueData || []}
+              xKey="month"
+              yKeys={[
+                { key: 'revenue', color: chartColors.primary[0], name: 'Revenue' },
+                { key: 'profit', color: chartColors.success[0], name: 'Profit' },
+                { key: 'expenses', color: chartColors.danger[0], name: 'Expenses' }
+              ]}
+              title="Revenue Trends"
+              height={350}
+              formatTooltip={(value, name) => [formatters.currency(Number(value)), name]}
+              ariaDescription="Monthly revenue, profit, and expenses data showing upward trend throughout the year"
+              enableAnimation={true}
+            />
+          </LazyChart>
         </ChartErrorBoundary>
 
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
-          <AreaChart
-            data={userGrowthData || []}
-            xKey="date"
-            yKeys={[
-              { key: 'totalUsers', color: chartColors.primary[0], name: 'Total Users' },
-              { key: 'activeUsers', color: chartColors.success[0], name: 'Active Users' },
-              { key: 'newUsers', color: chartColors.info[0], name: 'New Users' }
-            ]}
-            title="User Growth"
-            height={350}
-            formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
-            ariaDescription="Daily user growth metrics showing total, active, and new user counts"
-            stacked={false}
-            enableAnimation={true}
-          />
+          <LazyChart height={350} priority="high" enableIntersectionObserver={true}>
+            <AreaChart
+              data={userGrowthData || []}
+              xKey="date"
+              yKeys={[
+                { key: 'totalUsers', color: chartColors.primary[0], name: 'Total Users' },
+                { key: 'activeUsers', color: chartColors.success[0], name: 'Active Users' },
+                { key: 'newUsers', color: chartColors.info[0], name: 'New Users' }
+              ]}
+              title="User Growth"
+              height={350}
+              formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
+              ariaDescription="Daily user growth metrics showing total, active, and new user counts"
+              stacked={false}
+              enableAnimation={true}
+            />
+          </LazyChart>
         </ChartErrorBoundary>
       </div>
 
       {/* Category Performance & Sales Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
-          <PieChart
-            data={categoryData || []}
-            title="Sales by Category"
-            height={350}
-            formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
-            ariaDescription="Product category sales distribution showing Electronics leading with highest sales"
-            showPercentage={true}
-            enableAnimation={true}
-            colors={chartColors.mixed}
-          />
+          <LazyChart height={350} priority="normal" enableIntersectionObserver={true}>
+            <PieChart
+              data={categoryData || []}
+              title="Sales by Category"
+              height={350}
+              formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
+              ariaDescription="Product category sales distribution showing Electronics leading with highest sales"
+              showPercentage={true}
+              enableAnimation={true}
+              colors={chartColors.mixed}
+            />
+          </LazyChart>
         </ChartErrorBoundary>
 
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
@@ -317,20 +335,22 @@ export default function Analytics() {
           </div>
           
           <ChartErrorBoundary fallback={<LoadingSpinner />}>
-            <LineChart
-              data={performanceData || []}
-              xKey="date"
-              yKeys={[
-                { key: 'pageViews', color: chartColors.primary[0], name: 'Page Views' },
-                { key: 'uniqueVisitors', color: chartColors.success[0], name: 'Unique Visitors' }
-              ]}
-              height={300}
-              formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
-              ariaDescription="Daily website performance showing page views and unique visitor trends"
-              enableAnimation={true}
-              enableGrid={true}
-              className="mt-4"
-            />
+            <LazyChart height={300} priority="normal" enableIntersectionObserver={true}>
+              <LineChart
+                data={performanceData || []}
+                xKey="date"
+                yKeys={[
+                  { key: 'pageViews', color: chartColors.primary[0], name: 'Page Views' },
+                  { key: 'uniqueVisitors', color: chartColors.success[0], name: 'Unique Visitors' }
+                ]}
+                height={300}
+                formatTooltip={(value, name) => [formatters.number(Number(value)), name]}
+                ariaDescription="Daily website performance showing page views and unique visitor trends"
+                enableAnimation={true}
+                enableGrid={true}
+                className="mt-4"
+              />
+            </LazyChart>
           </ChartErrorBoundary>
         </div>
       </div>
@@ -338,33 +358,37 @@ export default function Analytics() {
       {/* Conversion & Bounce Rate */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
-          <AreaChart
-            data={performanceData || []}
-            xKey="date"
-            yKeys={[
-              { key: 'conversionRate', color: chartColors.success[0], name: 'Conversion Rate' }
-            ]}
-            title="Conversion Rate Trend"
-            height={300}
-            formatTooltip={(value, name) => [formatters.percentage(Number(value)), name]}
-            ariaDescription="Daily conversion rate showing improving trend over time"
-            enableAnimation={true}
-          />
+          <LazyChart height={300} priority="normal" enableIntersectionObserver={true}>
+            <AreaChart
+              data={performanceData || []}
+              xKey="date"
+              yKeys={[
+                { key: 'conversionRate', color: chartColors.success[0], name: 'Conversion Rate' }
+              ]}
+              title="Conversion Rate Trend"
+              height={300}
+              formatTooltip={(value, name) => [formatters.percentage(Number(value)), name]}
+              ariaDescription="Daily conversion rate showing improving trend over time"
+              enableAnimation={true}
+            />
+          </LazyChart>
         </ChartErrorBoundary>
 
         <ChartErrorBoundary fallback={<LoadingSpinner />}>
-          <AreaChart
-            data={performanceData || []}
-            xKey="date"
-            yKeys={[
-              { key: 'bounceRate', color: chartColors.warning[0], name: 'Bounce Rate' }
-            ]}
-            title="Bounce Rate Trend"
-            height={300}
-            formatTooltip={(value, name) => [formatters.percentage(Number(value)), name]}
-            ariaDescription="Daily bounce rate showing decreasing trend indicating better user engagement"
-            enableAnimation={true}
-          />
+          <LazyChart height={300} priority="normal" enableIntersectionObserver={true}>
+            <AreaChart
+              data={performanceData || []}
+              xKey="date"
+              yKeys={[
+                { key: 'bounceRate', color: chartColors.warning[0], name: 'Bounce Rate' }
+              ]}
+              title="Bounce Rate Trend"
+              height={300}
+              formatTooltip={(value, name) => [formatters.percentage(Number(value)), name]}
+              ariaDescription="Daily bounce rate showing decreasing trend indicating better user engagement"
+              enableAnimation={true}
+            />
+          </LazyChart>
         </ChartErrorBoundary>
       </div>
 

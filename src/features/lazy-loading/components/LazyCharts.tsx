@@ -4,12 +4,12 @@ import { ChartSkeleton } from '../../../shared';
 import { AdvancedLazyWrapper } from '../utils/advancedLazyUtils';
 
 // Lazy load advanced chart components with enhanced performance features
-const AdvancedAnimatedChart = React.lazy(() => import('../../../components/charts/advanced/AdvancedAnimatedChart'));
-const AdvancedHeatmap = React.lazy(() => import('../../../components/charts/advanced/AdvancedHeatmap'));
-const AdvancedTreemap = React.lazy(() => import('../../../components/charts/advanced/AdvancedTreemap'));
-const AdvancedRadarChart = React.lazy(() => import('../../../components/charts/advanced/AdvancedRadarChart'));
-const AdvancedParallelCoordinates = React.lazy(() => import('../../../components/charts/advanced/AdvancedParallelCoordinates'));
-const AdvancedLineChart = React.lazy(() => import('../../../components/charts/advanced/AdvancedLineChart'));
+const AdvancedAnimatedChart = React.lazy(() => import('../../../components/charts/AnimatedChart'));
+const AdvancedHeatmap = React.lazy(() => import('../../../components/charts/Heatmap'));
+const AdvancedTreemap = React.lazy(() => import('../../../components/charts/Treemap'));
+const AdvancedRadarChart = React.lazy(() => import('../../../components/charts/RadarChart'));
+const AdvancedParallelCoordinates = React.lazy(() => import('../../../components/charts/ParallelCoordinates'));
+const AdvancedLineChart = React.lazy(() => import('../../../components/charts/EnhancedLineChart'));
 
 // Basic charts with standard lazy loading
 const LineChart = React.lazy(() => import('../../../components/charts/LineChart'));
@@ -24,6 +24,7 @@ interface LazyChartProps {
   fallback?: React.ReactNode;
   priority?: 'high' | 'normal' | 'low';
   enableIntersectionObserver?: boolean;
+  prefetchResources?: string[]; // URLs of resources to prefetch
 }
 
 export const LazyChart: React.FC<LazyChartProps> = ({ 
@@ -31,7 +32,8 @@ export const LazyChart: React.FC<LazyChartProps> = ({
   height = 400,
   fallback,
   priority = 'normal',
-  enableIntersectionObserver = true
+  enableIntersectionObserver = true,
+  prefetchResources = []
 }) => {
   const chartFallback = fallback || <ChartSkeleton height={height} />;
 
@@ -47,6 +49,7 @@ export const LazyChart: React.FC<LazyChartProps> = ({
           loadingMessage="Loading chart..."
           priority={priority}
           enablePrefetch={priority === 'high'}
+          prefetchResources={prefetchResources}
         >
           {children}
         </AdvancedLazyWrapper>
@@ -60,6 +63,7 @@ export const LazyChart: React.FC<LazyChartProps> = ({
       loadingMessage="Loading chart..."
       priority={priority}
       enablePrefetch={priority === 'high'}
+      prefetchResources={prefetchResources}
     >
       <Suspense fallback={chartFallback}>
         {children}

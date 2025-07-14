@@ -17,6 +17,7 @@ interface AdvancedLazyWrapperProps {
   loadingMessage?: string;
   enablePrefetch?: boolean;
   priority?: 'high' | 'normal' | 'low';
+  prefetchResources?: string[]; // URLs of resources to prefetch
 }
 
 const AdvancedErrorFallback: React.FC<{ error: Error; resetErrorBoundary: () => void }> = ({
@@ -64,22 +65,44 @@ export const AdvancedLazyWrapper: React.FC<AdvancedLazyWrapperProps> = ({
   className,
   loadingMessage = 'Loading component...',
   enablePrefetch = true,
-  priority = 'normal'
+  priority = 'normal',
+  prefetchResources = []
 }) => {
   // Add resource hints for better loading performance
   React.useEffect(() => {
-    if (enablePrefetch && priority === 'high') {
-      // Add prefetch hints for critical resources
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.as = 'script';
-      document.head.appendChild(link);
+    if (enablePrefetch && priority === 'high' && prefetchResources.length > 0) {
+      const links: HTMLLinkElement[] = [];
+      
+      prefetchResources.forEach(resourceUrl => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = resourceUrl;
+        
+        // Determine resource type from URL or default to script
+        if (resourceUrl.endsWith('.css')) {
+          link.as = 'style';
+        } else if (resourceUrl.endsWith('.js') || resourceUrl.endsWith('.mjs')) {
+          link.as = 'script';
+        } else if (resourceUrl.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
+          link.as = 'image';
+        } else {
+          link.as = 'fetch';
+          link.setAttribute('crossorigin', 'anonymous');
+        }
+        
+        document.head.appendChild(link);
+        links.push(link);
+      });
 
       return () => {
-        document.head.removeChild(link);
+        links.forEach(link => {
+          if (document.head.contains(link)) {
+            document.head.removeChild(link);
+          }
+        });
       };
     }
-  }, [enablePrefetch, priority]);
+  }, [enablePrefetch, priority, prefetchResources]);
 
   return (
     <div className={className}>

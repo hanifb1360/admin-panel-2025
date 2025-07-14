@@ -2,9 +2,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState, useEffect, Suspense } from 'react';
 import { ThemeProvider } from './contexts/ThemeProvider';
 import { WebSocketProvider } from './contexts/WebSocketContext';
+import { PerformanceMonitorProvider } from './contexts/PerformanceMonitorContext';
 import Layout from './components/Layout';
+import { ConditionalPerformanceOverlay } from './components/ConditionalPerformanceOverlay';
 import { LoadingFallback } from './shared';
-import { PerformanceOverlay } from './features/performance';
 import { createAdvancedLazyComponent, createPreloadingHooks, useAdvancedPerformance } from './features/performance';
 import { mockWebSocketServer } from './lib/mockWebSocketServer';
 
@@ -144,19 +145,21 @@ function App() {
 
   return (
     <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <WebSocketProvider url="ws://localhost:8080" enabled={true}>
-          <Layout 
-            title={getPageTitle()} 
-            currentPage={currentPage}
-            onNavigate={setCurrentPage}
-            onNavigationHover={handleNavigationHover}
-          >
-            {renderPage()}
-          </Layout>
-          <PerformanceOverlay />
-        </WebSocketProvider>
-      </QueryClientProvider>
+      <PerformanceMonitorProvider>
+        <QueryClientProvider client={queryClient}>
+          <WebSocketProvider url="ws://localhost:8080" enabled={true}>
+            <Layout 
+              title={getPageTitle()} 
+              currentPage={currentPage}
+              onNavigate={setCurrentPage}
+              onNavigationHover={handleNavigationHover}
+            >
+              {renderPage()}
+            </Layout>
+            <ConditionalPerformanceOverlay />
+          </WebSocketProvider>
+        </QueryClientProvider>
+      </PerformanceMonitorProvider>
     </ThemeProvider>
   );
 }

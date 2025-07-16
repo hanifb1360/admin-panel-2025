@@ -65,12 +65,6 @@ export default function Sidebar({
           designSystem.spacing.gap.sm,
           isCollapsed && designSystem.layout.flex.center
         )}>
-          <div className={cn(
-            componentVariants.iconContainer.small,
-            designSystem.colors.primary[600]
-          )}>
-            <LayoutDashboard className="w-5 h-5" />
-          </div>
           {!isCollapsed && (
             <span className={cn(designSystem.typography.heading.lg)}>Admin Panel</span>
           )}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '../lib/utils';
 import { designSystem } from '../lib/designSystem';
 import Sidebar from './Sidebar';
@@ -19,21 +19,44 @@ export default function Layout({
   onNavigate,
   onNavigationHover 
 }: LayoutProps) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Sidebar is collapsed on mobile by default
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(window.innerWidth < 1024);
+  const [sidebarVisible, setSidebarVisible] = useState(window.innerWidth >= 1024);
+
+  // Responsive handler
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setSidebarCollapsed(true);
+        setSidebarVisible(false);
+      } else {
+        setSidebarCollapsed(false);
+        setSidebarVisible(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleHamburger = () => {
+    setSidebarVisible((v) => !v);
+  };
 
   return (
     <div className={cn('flex h-screen', designSystem.colors.bg.secondary)}>
-      <Sidebar 
-        isCollapsed={sidebarCollapsed} 
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
-        currentPage={currentPage}
-        onNavigate={onNavigate}
-        onNavigationHover={onNavigationHover}
-      />
-      
+      {/* Sidebar overlays content on mobile, inline on desktop */}
+      {sidebarVisible && (
+        <Sidebar 
+          isCollapsed={sidebarCollapsed} 
+          onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+          currentPage={currentPage}
+          onNavigate={onNavigate}
+          onNavigationHover={onNavigationHover}
+          onCloseSidebar={() => setSidebarVisible(false)}
+        />
+      )}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Header title={title} />
-        
+        <Header title={title} onHamburger={handleHamburger} />
         <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>

@@ -19,6 +19,7 @@ interface SidebarProps {
   currentPage?: string;
   onNavigate?: (page: string) => void;
   onNavigationHover?: (page: string) => void;
+  onCloseSidebar?: () => void;
 }
 
 const navigation = [
@@ -36,13 +37,24 @@ export default function Sidebar({
   onToggle, 
   currentPage, 
   onNavigate, 
-  onNavigationHover 
+  onNavigationHover, 
+  onCloseSidebar
 }: SidebarProps) {
+  // Overlay close button for mobile
   return (
     <div className={cn(
       componentVariants.sidebar.container,
-      isCollapsed ? "w-16" : "w-64"
+      isCollapsed ? "w-16" : "w-64",
+      'fixed z-40 top-0 left-0 h-full lg:static',
+      'transition-all duration-200',
+      'bg-white dark:bg-gray-900',
     )}>
+      {/* Mobile close button */}
+      <div className="lg:hidden flex justify-end p-2">
+        <button onClick={onCloseSidebar} aria-label="Close sidebar" className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      </div>
       {/* Header */}
       <div className={cn(
         componentVariants.sidebar.header,

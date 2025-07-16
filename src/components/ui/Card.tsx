@@ -1,18 +1,35 @@
+
 import React from 'react';
-import { cn } from '../../lib/utils';
+import { card } from '../../design-system/components/card';
+
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+  variant?: keyof typeof card.variants;
+  padding?: keyof typeof card.padding;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className, ...props }) => (
-  <div
-    className={cn(
-      'bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700',
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </div>
-);
+
+export const Card: React.FC<CardProps> = ({
+  children,
+  className,
+  variant = 'default',
+  padding = 'md',
+  ...props
+}) => {
+  // Merge base, variant, and padding styles
+  const styleObj = {
+    ...card.base,
+    ...(card.variants[variant] || {}),
+    ...(card.padding[padding] || {}),
+  };
+  return (
+    <div
+      style={styleObj}
+      className={className}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};

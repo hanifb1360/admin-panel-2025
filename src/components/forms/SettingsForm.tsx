@@ -11,7 +11,7 @@ import {
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import { settingsFormSchema, type SettingsFormData } from '../../lib/validations';
 import { cn } from '../../lib/utils';
-import { tw } from '../../design-system/utilities/tailwind';
+import { tw, componentVariants } from '../../design-system/utilities/tailwind';
 
 const themeOptions = [
   { value: 'light', label: 'Light Theme' },
@@ -104,7 +104,7 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
     <FormCard 
       title="Application Settings" 
       description="Configure your application settings, security, and preferences"
-      className="max-w-6xl mx-auto"
+      className={cn("max-w-6xl mx-auto", tw.bg.white, tw.effects.rounded.lg, tw.effects.shadow.sm, tw.border.primary, "border")}
     >
       <Form onSubmit={form.handleSubmit(handleSubmit)}>
         <FormError error={submitError} />
@@ -193,7 +193,7 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
               )}
             />
             {form.getFieldError('maintenanceMode') && (
-              <p className="mt-1 text-xs text-red-600">{form.getFieldError('maintenanceMode')}</p>
+              <p className={cn("mt-1 text-xs", tw.text.error)}>{form.getFieldError('maintenanceMode')}</p>
             )}
           </div>
 
@@ -450,9 +450,11 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
 
         <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={onCancel} disabled={isLoading}>Cancel</button>
+            <button type="button" className={cn(componentVariants.button.secondary, "transition")}
+              onClick={onCancel} disabled={isLoading}>Cancel</button>
           )}
-          <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" disabled={isLoading}>Save Settings</button>
+          <button type="submit" className={cn(componentVariants.button.primary, "transition")}
+            disabled={isLoading}>Save Settings</button>
         </div>
       </Form>
     </FormCard>

@@ -9,6 +9,8 @@ import {
   Select, 
   Checkbox 
 } from '../ui/FormControls';
+import { cn } from '../../lib/utils';
+import { tw, componentVariants } from '../../design-system/utilities/tailwind';
 
 // User form schema
 const userSchema = z.object({
@@ -97,7 +99,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.name?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.name?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.name?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -115,7 +117,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.email?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.email?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.email?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -133,7 +135,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.phone?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.phone?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.phone?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -151,7 +153,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.department?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.department?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.department?.message}</p>
               )}
             </div>
           </div>
@@ -174,7 +176,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.role?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.role?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.role?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -193,7 +195,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 )}
               />
               {form.formState.errors.isActive?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.isActive?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.isActive?.message}</p>
               )}
             </div>
           </div>
@@ -215,18 +217,18 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
               )}
             />
             {form.formState.errors.bio?.message && (
-              <p className="mt-1 text-xs text-red-600">{form.formState.errors.bio?.message}</p>
+              <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.bio?.message}</p>
             )}
           </div>
         </FormSection>
 
         <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={onCancel} disabled={isLoading}>Cancel</button>
+            <button type="button" className={cn(componentVariants.button.secondary, "transition")}
+              onClick={onCancel} disabled={isLoading}>Cancel</button>
           )}
-          <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" disabled={isLoading}>
-            {initialData ? 'Update User' : 'Create User'}
-          </button>
+          <button type="submit" className={cn(componentVariants.button.primary, "transition")}
+            disabled={isLoading}>{initialData ? 'Update User' : 'Create User'}</button>
         </div>
       </Form>
     </FormCard>

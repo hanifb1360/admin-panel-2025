@@ -17,7 +17,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import { contactFormSchema, type ContactFormData } from '../../lib/validations';
 import { validateFileUpload } from '../../lib/validations';
 import { cn } from '../../lib/utils';
-import { tw } from '../../design-system/utilities/tailwind';
+import { tw, componentVariants } from '../../design-system/utilities/tailwind';
 
 const priorityOptions = [
   { value: 'low', label: 'Low' },
@@ -105,7 +105,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
     <FormCard 
       title="Contact Form" 
       description="Send us a message and we'll get back to you as soon as possible"
-      className="max-w-4xl mx-auto"
+      className={cn("max-w-4xl mx-auto", tw.bg.white, tw.effects.rounded.lg, tw.effects.shadow.sm, tw.border.primary, "border")}
     >
       <Form onSubmit={form.handleSubmit(handleSubmit)}>
         <FormError error={submitError} />
@@ -128,7 +128,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 )}
               />
               {form.getFieldError('name') && (
-                <p className="mt-1 text-xs text-red-600">{form.getFieldError('name')}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.getFieldError('name')}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -147,7 +147,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 )}
               />
               {form.getFieldError('email') && (
-                <p className="mt-1 text-xs text-red-600">{form.getFieldError('email')}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.getFieldError('email')}</p>
               )}
             </div>
           </div>
@@ -171,9 +171,9 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 )}
               />
               {form.getFieldError('priority') && (
-                <p className="mt-1 text-xs text-red-600">{form.getFieldError('priority')}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.getFieldError('priority')}</p>
               )}
-              <p className="text-xs text-gray-500">Select the urgency level of your inquiry</p>
+              <p className={cn("text-xs", tw.text.secondary)}>Select the urgency level of your inquiry</p>
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium mb-1">Category</label>
@@ -191,9 +191,9 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 )}
               />
               {form.getFieldError('category') && (
-                <p className="mt-1 text-xs text-red-600">{form.getFieldError('category')}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.getFieldError('category')}</p>
               )}
-              <p className="text-xs text-gray-500">Choose the category that best fits your inquiry</p>
+              <p className={cn("text-xs", tw.text.secondary)}>Choose the category that best fits your inquiry</p>
             </div>
           </div>
 
@@ -215,7 +215,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
             {form.getFieldError('subject') && (
               <p className="mt-1 text-xs text-red-600">{form.getFieldError('subject')}</p>
             )}
-            <p className="text-xs text-gray-500">{getFieldCharacterCount('subject')}/100 characters</p>
+            <p className={cn("text-xs", tw.text.secondary)}>{getFieldCharacterCount('subject')}/100 characters</p>
           </div>
 
           <div className="space-y-2 mt-6">
@@ -237,7 +237,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
             {form.getFieldError('message') && (
               <p className="mt-1 text-xs text-red-600">{form.getFieldError('message')}</p>
             )}
-            <p className="text-xs text-gray-500">{getFieldCharacterCount('message')}/1000 characters</p>
+            <p className={cn("text-xs", tw.text.secondary)}>{getFieldCharacterCount('message')}/1000 characters</p>
           </div>
         </FormSection>
 
@@ -258,7 +258,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
               }}
               disabled={isLoading}
             />
-            <p className="text-xs text-gray-500">You can attach images (JPEG, PNG, GIF), PDF files, or text documents. Maximum file size: 10MB each.</p>
+            <p className={cn("text-xs", tw.text.secondary)}>You can attach images (JPEG, PNG, GIF), PDF files, or text documents. Maximum file size: 10MB each.</p>
           </div>
 
           {uploadedFiles.length > 0 && (
@@ -296,7 +296,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                     </div>
                     <button
                       type="button"
-                      className="px-2 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 text-xs"
+                      className={cn("px-2 py-1 rounded border text-xs", tw.border.primary, tw.text.primary, tw.bg.white, tw.states.hover.bg.gray100)}
                       onClick={() => removeFile(index)}
                       disabled={isLoading}
                     >
@@ -313,7 +313,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
           {onCancel && (
             <button 
               type="button" 
-              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" 
+              className={cn(componentVariants.button.secondary, "transition")}
               onClick={onCancel}
               disabled={isLoading}
             >
@@ -322,7 +322,7 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
           )}
           <button 
             type="submit" 
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" 
+            className={cn(componentVariants.button.primary, "transition")}
             disabled={isLoading || !form.state.isValid}
           >
             Send Message

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { ChevronLeft, Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
-import { tw } from '../../design-system/utilities/tailwind';
+import { tw, componentVariants } from '../../design-system/utilities/tailwind';
 import { Form, FormSection, FormCard, FormError, FormSuccess } from '../ui/Form';
 import { 
   Input, 
@@ -212,7 +212,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.personal?.firstName?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.firstName?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.firstName?.message}</p>
           )}
         </div>
 
@@ -230,7 +230,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.personal?.lastName?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.lastName?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.lastName?.message}</p>
           )}
         </div>
 
@@ -249,7 +249,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.personal?.email?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.email?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.email?.message}</p>
           )}
         </div>
 
@@ -268,7 +268,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.personal?.phone?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.phone?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.phone?.message}</p>
           )}
         </div>
 
@@ -286,7 +286,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.personal?.dateOfBirth?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.dateOfBirth?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.dateOfBirth?.message}</p>
           )}
         </div>
       </div>
@@ -310,7 +310,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.address?.street?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.street?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.street?.message}</p>
           )}
         </div>
       </div>
@@ -330,7 +330,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.address?.city?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.city?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.city?.message}</p>
           )}
         </div>
 
@@ -348,7 +348,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.address?.state?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.state?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.state?.message}</p>
           )}
         </div>
 
@@ -366,7 +366,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.address?.zipCode?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.zipCode?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.zipCode?.message}</p>
           )}
         </div>
 
@@ -385,7 +385,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.address?.country?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.country?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.country?.message}</p>
           )}
         </div>
       </div>
@@ -409,7 +409,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.professional?.company?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.company?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.company?.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -426,7 +426,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.professional?.position?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.position?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.position?.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -446,7 +446,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.professional?.experience?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.experience?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.experience?.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -466,7 +466,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.professional?.salary?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.salary?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.salary?.message}</p>
           )}
         </div>
       </div>
@@ -491,7 +491,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.preferences?.theme?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.theme?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.preferences?.theme?.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -509,7 +509,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.preferences?.language?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.language?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.preferences?.language?.message}</p>
           )}
         </div>
       </div>
@@ -530,7 +530,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.preferences?.newsletter?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.newsletter?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.preferences?.newsletter?.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -549,7 +549,7 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
             )}
           />
           {form.formState.errors.preferences?.notifications?.message && (
-            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.notifications?.message}</p>
+            <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.preferences?.notifications?.message}</p>
           )}
         </div>
       </div>
@@ -575,21 +575,18 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
     <FormCard 
       title={steps[currentStep].title} 
       description={steps[currentStep].description}
-      className="max-w-4xl mx-auto"
+      className={cn("max-w-4xl mx-auto", tw.bg.white, tw.effects.rounded.lg, tw.effects.shadow.sm, tw.border.primary, "border")}
     >
       <Form onSubmit={form.handleSubmit(handleSubmit)}>
         {renderStepIndicator()}
-        
         <FormError error={submitError} />
         <FormSuccess message={submitSuccess} />
-
         {renderCurrentStep()}
-
         <div className="flex gap-4 justify-end mt-6">
           {currentStep > 0 && (
             <button
               type="button"
-              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+              className={cn(componentVariants.button.secondary, "transition")}
               onClick={prevStep}
               disabled={isLoading}
             >
@@ -599,17 +596,16 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
           {onCancel && (
             <button
               type="button"
-              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+              className={cn(componentVariants.button.secondary, "transition")}
               onClick={onCancel}
               disabled={isLoading}
             >
               Cancel
             </button>
           )}
-          {/* Remove Save Draft button since saveDraft is not defined */}
           <button
             type="submit"
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+            className={cn(componentVariants.button.primary, "transition")}
             disabled={isLoading}
           >
             {currentStep === steps.length - 1 ? 'Submit' : 'Next'}

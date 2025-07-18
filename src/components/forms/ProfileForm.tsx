@@ -9,7 +9,7 @@ import {
 import { useFormWithValidation, useFormPersistence } from '../../hooks/useFormWithValidation';
 import { profileFormSchema, type ProfileFormData } from '../../lib/validations';
 import { cn } from '../../lib/utils';
-import { tw } from '../../design-system/utilities/tailwind';
+import { tw, componentVariants } from '../../design-system/utilities/tailwind';
 
 const genderOptions = [
   { value: 'male', label: 'Male' },
@@ -169,7 +169,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
     <FormCard 
       title="Professional Profile" 
       description="Complete your professional profile with personal, contact, and professional information"
-      className="max-w-6xl mx-auto"
+      className={cn("max-w-6xl mx-auto", tw.bg.white, tw.effects.rounded.lg, tw.effects.shadow.sm, tw.border.primary, "border")}
     >
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center space-x-4">
@@ -187,11 +187,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
           </div>
         </div>
         <div className="flex space-x-2">
-          <button type="button" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" onClick={loadDraftData} disabled={isLoading}>Load Draft</button>
-          <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={clearDraftData} disabled={isLoading}>Clear Form</button>
+          <button type="button" className={cn(componentVariants.button.primary, "transition")}
+            onClick={loadDraftData} disabled={isLoading}>Load Draft</button>
+          <button type="button" className={cn(componentVariants.button.secondary, "transition")}
+            onClick={clearDraftData} disabled={isLoading}>Clear Form</button>
         </div>
       </div>
-
       <Form onSubmit={form.handleSubmit(handleSubmit)}>
         <FormError error={submitError} />
         <FormSuccess message={submitSuccess} />
@@ -213,7 +214,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.firstName?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.firstName?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.firstName?.message}</p>
               )}
             </div>
 
@@ -232,7 +233,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.middleName?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.middleName?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.middleName?.message}</p>
               )}
             </div>
 
@@ -251,7 +252,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.lastName?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.lastName?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.lastName?.message}</p>
               )}
             </div>
           </div>
@@ -273,7 +274,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.email?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.email?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.email?.message}</p>
               )}
             </div>
 
@@ -293,7 +294,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.phone?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.phone?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.phone?.message}</p>
               )}
             </div>
           </div>
@@ -314,7 +315,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.dateOfBirth?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.dateOfBirth?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.dateOfBirth?.message}</p>
               )}
             </div>
 
@@ -334,7 +335,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.gender?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.gender?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.gender?.message}</p>
               )}
             </div>
 
@@ -353,7 +354,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.personal?.nationality?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.nationality?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.personal?.nationality?.message}</p>
               )}
             </div>
           </div>
@@ -375,7 +376,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
               )}
             />
             {form.formState.errors.address?.street?.message && (
-              <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.street?.message}</p>
+              <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.street?.message}</p>
             )}
           </div>
           <div className="grid grid-cols-2 gap-6">
@@ -394,7 +395,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.address?.city?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.city?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.city?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -412,7 +413,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.address?.state?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.state?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.state?.message}</p>
               )}
             </div>
           </div>
@@ -432,7 +433,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.address?.zipCode?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.zipCode?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.zipCode?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -451,7 +452,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.address?.country?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.country?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.address?.country?.message}</p>
               )}
             </div>
           </div>
@@ -474,7 +475,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.company?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.company?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.company?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -492,7 +493,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.position?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.position?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.position?.message}</p>
               )}
             </div>
           </div>
@@ -513,7 +514,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.department?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.department?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.department?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -535,7 +536,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.experience?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.experience?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.experience?.message}</p>
               )}
             </div>
           </div>
@@ -565,7 +566,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
               ))}
             </div>
             {form.formState.errors.professional?.skills?.message && (
-              <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.skills?.message}</p>
+              <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.skills?.message}</p>
             )}
           </div>
 
@@ -586,7 +587,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.linkedinProfile?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.linkedinProfile?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.linkedinProfile?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -605,7 +606,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.professional?.portfolio?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.portfolio?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.professional?.portfolio?.message}</p>
               )}
             </div>
           </div>
@@ -628,7 +629,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.emergency?.name?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.name?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.emergency?.name?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -647,7 +648,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.emergency?.phone?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.phone?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.emergency?.phone?.message}</p>
               )}
             </div>
           </div>
@@ -669,7 +670,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.emergency?.relationship?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.relationship?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.emergency?.relationship?.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -687,7 +688,7 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 )}
               />
               {form.formState.errors.emergency?.address?.message && (
-                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.address?.message}</p>
+                <p className={cn("mt-1 text-xs", tw.text.error)}>{form.formState.errors.emergency?.address?.message}</p>
               )}
             </div>
           </div>
@@ -838,30 +839,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
 
         <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <button 
-              type="button" 
-              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" 
-              onClick={onCancel}
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
+            <button type="button" className={cn(componentVariants.button.secondary, "transition")}
+              onClick={onCancel} disabled={isLoading}>Cancel</button>
           )}
-          <button 
-            type="button" 
-            className="px-4 py-2 rounded bg-blue-100 text-blue-800 hover:bg-blue-200 transition" 
-            onClick={persistence.manualSave}
-            disabled={isLoading}
-          >
-            Save Draft
-          </button>
-          <button 
-            type="submit" 
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" 
-            disabled={isLoading}
-          >
-            Save Profile
-          </button>
+          <button type="button" className={cn(componentVariants.button.primary, "transition")}
+            onClick={persistence.manualSave} disabled={isLoading}>Save Draft</button>
+          <button type="submit" className={cn(componentVariants.button.primary, "transition")}
+            disabled={isLoading}>Save Profile</button>
         </div>
       </Form>
     </FormCard>

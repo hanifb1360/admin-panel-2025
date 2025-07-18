@@ -35,8 +35,9 @@ export function Form({ children, className, ...props }: FormProps) {
     padding: typeof form.base.padding === 'number' ? `${form.base.padding}px` : form.base.padding,
     boxSizing: 'border-box',
   };
+  delete style.backgroundColor;
   return (
-    <form style={style} className={cn(className)} {...props}>
+    <form style={style} className={cn('bg-white dark:bg-gray-900', className)} {...props}>
       {children}
     </form>
   );
@@ -50,8 +51,10 @@ export interface FormSectionProps {
 }
 
 export function FormSection({ title, description, children, className }: FormSectionProps) {
+  const style: React.CSSProperties = { ...formHeader.base };
+  delete style.backgroundColor;
   return (
-    <section style={formHeader.base} className={cn(className)}>
+    <section style={style} className={cn('bg-white dark:bg-gray-900', className)}>
       {(title || description) && (
         <header>
           {title && <h3>{title}</h3>}
@@ -77,8 +80,9 @@ export function FormCard({ title, description, children, className }: FormCardPr
     padding: typeof form.base.padding === 'number' ? `${form.base.padding}px` : form.base.padding,
     boxSizing: 'border-box',
   };
+  delete style.backgroundColor;
   return (
-    <div style={style} className={cn(className)}>
+    <div style={style} className={cn('bg-white dark:bg-gray-900', className)}>
       {(title || description) && (
         <div style={formHeader.base}>
           {title && <h3>{title}</h3>}

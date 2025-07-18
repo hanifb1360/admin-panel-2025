@@ -1,3 +1,22 @@
+export interface FormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function FormButton({ children, className, ...props }: FormButtonProps) {
+  return (
+    <button
+      type={props.type || 'button'}
+      className={cn(
+        'px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
 import React from 'react';
 import { cn } from '../../lib/utils';
 import { form, formHeader, formContent, formError, formSuccess } from '../../design-system/components/form';

@@ -3,7 +3,6 @@ import { cn } from '../../lib/utils';
 import { tw } from '../../design-system/utilities/tailwind';
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  label?: string;
   error?: string;
   helperText?: string;
   leftIcon?: React.ReactNode;
@@ -16,7 +15,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({
     className,
     type,
-    label,
+    // label,
     error,
     helperText,
     leftIcon,
@@ -44,18 +43,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="w-full">
-        {label && (
-          <label
-            htmlFor={inputId}
-            className={cn(
-              'block text-sm font-medium mb-1',
-              hasError ? tw.text.error : tw.text.primary
-            )}
-          >
-            {label}
-          </label>
-        )}
-        
         <div className="relative">
           {leftIcon && (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -108,7 +95,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
   error?: string;
   helperText?: string;
   variant?: 'default' | 'error' | 'success';
@@ -118,7 +104,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({
     className,
-    label,
+    // label,
     error,
     helperText,
     variant = 'default',
@@ -145,18 +131,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <div className="w-full">
-        {label && (
-          <label
-            htmlFor={textareaId}
-            className={cn(
-              'block text-sm font-medium mb-1',
-              hasError ? tw.text.error : tw.text.primary
-            )}
-          >
-            {label}
-          </label>
-        )}
-        
         <textarea
           ref={ref}
           id={textareaId}
@@ -199,7 +173,6 @@ export interface SelectOption {
 }
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string;
   error?: string;
   helperText?: string;
   options: SelectOption[];
@@ -210,7 +183,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({
     className,
-    label,
+    // label,
     error,
     helperText,
     options,
@@ -239,18 +212,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <div className="w-full">
-        {label && (
-          <label
-            htmlFor={selectId}
-            className={cn(
-              'block text-sm font-medium mb-1',
-              hasError ? tw.text.error : tw.text.primary
-            )}
-          >
-            {label}
-          </label>
-        )}
-        
         <select
           ref={ref}
           id={selectId}
@@ -303,7 +264,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 Select.displayName = 'Select';
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
   error?: string;
   helperText?: string;
   variant?: 'default' | 'error' | 'success';
@@ -312,7 +272,7 @@ export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElemen
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({
     className,
-    label,
+    // label,
     error,
     helperText,
     variant = 'default',
@@ -339,18 +299,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             )}
             {...props}
           />
-          
-          {label && (
-            <label
-              htmlFor={checkboxId}
-              className={cn(
-                'ml-2 text-sm cursor-pointer',
-                hasError ? tw.text.error : tw.text.primary
-              )}
-            >
-              {label}
-            </label>
-          )}
         </div>
         
         {(error || helperText) && (
@@ -379,7 +327,6 @@ export interface RadioGroupProps {
   options: RadioOption[];
   value?: string;
   onChange?: (value: string) => void;
-  label?: string;
   error?: string;
   helperText?: string;
   variant?: 'default' | 'error' | 'success';
@@ -392,7 +339,7 @@ export const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
     options,
     value,
     onChange,
-    label,
+    // label,
     error,
     helperText,
     variant = 'default',
@@ -402,15 +349,6 @@ export const RadioGroup = forwardRef<HTMLInputElement, RadioGroupProps>(
 
     return (
       <div className="w-full">
-        {label && (
-          <label className={cn(
-            'block text-sm font-medium mb-1',
-            hasError ? tw.text.error : tw.text.primary
-          )}>
-            {label}
-          </label>
-        )}
-        
         <div className={cn(
           'flex',
           direction === 'horizontal' ? 'flex-row space-x-4' : 'flex-col space-y-2'

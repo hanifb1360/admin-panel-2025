@@ -2,17 +2,7 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { 
-  Form, 
-  FormField, 
-  FormSection, 
-  FormActions, 
-  FormButton, 
-  FormGrid, 
-  FormCard, 
-  FormError,
-  FormSuccess 
-} from '../ui/Form';
+import { Form, FormSection, FormCard, FormError, FormSuccess } from '../ui/Form';
 import { 
   Input, 
   Textarea, 
@@ -92,12 +82,9 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
         <FormSuccess message={submitSuccess} />
 
         <FormSection title="Basic Information">
-          <FormGrid columns={2}>
-            <FormField
-              label="Name"
-              error={form.formState.errors.name?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Name</label>
               <Controller
                 name="name"
                 control={form.control}
@@ -109,13 +96,12 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Email"
-              error={form.formState.errors.email?.message}
-              required
-            >
+              {form.formState.errors.name?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.name?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Email</label>
               <Controller
                 name="email"
                 control={form.control}
@@ -128,12 +114,12 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Phone"
-              error={form.formState.errors.phone?.message}
-            >
+              {form.formState.errors.email?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.email?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Phone</label>
               <Controller
                 name="phone"
                 control={form.control}
@@ -146,12 +132,12 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Department"
-              error={form.formState.errors.department?.message}
-            >
+              {form.formState.errors.phone?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.phone?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Department</label>
               <Controller
                 name="department"
                 control={form.control}
@@ -164,17 +150,17 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.department?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.department?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Role & Permissions">
-          <FormGrid columns={2}>
-            <FormField
-              label="Role"
-              error={form.formState.errors.role?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Role</label>
               <Controller
                 name="role"
                 control={form.control}
@@ -187,12 +173,12 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Status"
-              error={form.formState.errors.isActive?.message}
-            >
+              {form.formState.errors.role?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.role?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Active user</label>
               <Controller
                 name="isActive"
                 control={form.control}
@@ -202,21 +188,20 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     name={field.name}
-                    label="Active user"
                     variant={form.formState.errors.isActive ? 'error' : 'default'}
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.isActive?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.isActive?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Additional Information">
-          <FormField
-            label="Bio"
-            error={form.formState.errors.bio?.message}
-            helperText="Optional description about the user"
-          >
+          <div className="space-y-2">
+            <label className="block text-sm font-medium mb-1">Bio</label>
             <Controller
               name="bio"
               control={form.control}
@@ -229,29 +214,20 @@ export function UserForm({ initialData, onSubmit, onCancel, isLoading }: UserFor
                 />
               )}
             />
-          </FormField>
+            {form.formState.errors.bio?.message && (
+              <p className="mt-1 text-xs text-red-600">{form.formState.errors.bio?.message}</p>
+            )}
+          </div>
         </FormSection>
 
-        <FormActions>
+        <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <FormButton 
-              type="button" 
-              variant="secondary" 
-              onClick={onCancel}
-              disabled={isLoading}
-            >
-              Cancel
-            </FormButton>
+            <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={onCancel} disabled={isLoading}>Cancel</button>
           )}
-          <FormButton 
-            type="submit" 
-            variant="primary" 
-            loading={isLoading}
-            disabled={isLoading}
-          >
+          <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" disabled={isLoading}>
             {initialData ? 'Update User' : 'Create User'}
-          </FormButton>
-        </FormActions>
+          </button>
+        </div>
       </Form>
     </FormCard>
   );

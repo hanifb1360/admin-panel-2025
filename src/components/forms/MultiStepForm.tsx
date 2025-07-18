@@ -2,20 +2,10 @@ import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ChevronLeft, Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { tw } from '../../design-system/utilities/tailwind';
-import { 
-  Form, 
-  FormField, 
-  FormSection, 
-  FormActions, 
-  FormButton, 
-  FormGrid, 
-  FormCard, 
-  FormError,
-  FormSuccess 
-} from '../ui/Form';
+import { Form, FormSection, FormCard, FormError, FormSuccess } from '../ui/Form';
 import { 
   Input, 
   Select, 
@@ -114,7 +104,6 @@ interface MultiStepFormProps {
 
 export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
   const [submitSuccess, setSubmitSuccess] = useState<string>('');
 
@@ -164,20 +153,14 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
     }
   };
 
-  const nextStep = async () => {
-    const isValid = await form.trigger();
-    if (isValid) {
-      setCompletedSteps(prev => [...prev, currentStep]);
-      setCurrentStep(prev => prev + 1);
-    }
-  };
+  // Removed unused nextStep function
 
   const prevStep = () => {
     setCurrentStep(prev => prev - 1);
   };
 
   const goToStep = (step: number) => {
-    if (step <= currentStep || completedSteps.includes(step - 1)) {
+    if (step <= currentStep) {
       setCurrentStep(step);
     }
   };
@@ -214,12 +197,9 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
 
   const renderPersonalStep = () => (
     <FormSection title="Personal Information" description="Tell us about yourself">
-      <FormGrid columns={2}>
-        <FormField
-          label="First Name"
-          error={form.formState.errors.personal?.firstName?.message}
-          required
-        >
+      <div className="grid grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">First Name</label>
           <Controller
             name="personal.firstName"
             control={form.control}
@@ -231,13 +211,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.personal?.firstName?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.firstName?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="Last Name"
-          error={form.formState.errors.personal?.lastName?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Last Name</label>
           <Controller
             name="personal.lastName"
             control={form.control}
@@ -249,13 +229,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.personal?.lastName?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.lastName?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="Email"
-          error={form.formState.errors.personal?.email?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Email</label>
           <Controller
             name="personal.email"
             control={form.control}
@@ -268,13 +248,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.personal?.email?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.email?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="Phone"
-          error={form.formState.errors.personal?.phone?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Phone</label>
           <Controller
             name="personal.phone"
             control={form.control}
@@ -287,13 +267,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.personal?.phone?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.phone?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="Date of Birth"
-          error={form.formState.errors.personal?.dateOfBirth?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Date of Birth</label>
           <Controller
             name="personal.dateOfBirth"
             control={form.control}
@@ -305,19 +285,19 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-      </FormGrid>
+          {form.formState.errors.personal?.dateOfBirth?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.dateOfBirth?.message}</p>
+          )}
+        </div>
+      </div>
     </FormSection>
   );
 
   const renderAddressStep = () => (
     <FormSection title="Address Information" description="Where can we reach you?">
-      <FormGrid columns={1}>
-        <FormField
-          label="Street Address"
-          error={form.formState.errors.address?.street?.message}
-          required
-        >
+      <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Street Address</label>
           <Controller
             name="address.street"
             control={form.control}
@@ -329,15 +309,15 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-      </FormGrid>
+          {form.formState.errors.address?.street?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.street?.message}</p>
+          )}
+        </div>
+      </div>
 
-      <FormGrid columns={2}>
-        <FormField
-          label="City"
-          error={form.formState.errors.address?.city?.message}
-          required
-        >
+      <div className="grid grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">City</label>
           <Controller
             name="address.city"
             control={form.control}
@@ -349,13 +329,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.address?.city?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.city?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="State"
-          error={form.formState.errors.address?.state?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">State</label>
           <Controller
             name="address.state"
             control={form.control}
@@ -367,13 +347,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.address?.state?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.state?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="ZIP Code"
-          error={form.formState.errors.address?.zipCode?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">ZIP Code</label>
           <Controller
             name="address.zipCode"
             control={form.control}
@@ -385,13 +365,13 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
+          {form.formState.errors.address?.zipCode?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.zipCode?.message}</p>
+          )}
+        </div>
 
-        <FormField
-          label="Country"
-          error={form.formState.errors.address?.country?.message}
-          required
-        >
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Country</label>
           <Controller
             name="address.country"
             control={form.control}
@@ -404,19 +384,19 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-      </FormGrid>
+          {form.formState.errors.address?.country?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.country?.message}</p>
+          )}
+        </div>
+      </div>
     </FormSection>
   );
 
   const renderProfessionalStep = () => (
     <FormSection title="Professional Information" description="Tell us about your work">
-      <FormGrid columns={2}>
-        <FormField
-          label="Company"
-          error={form.formState.errors.professional?.company?.message}
-          required
-        >
+      <div className="grid grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Company</label>
           <Controller
             name="professional.company"
             control={form.control}
@@ -428,13 +408,12 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-
-        <FormField
-          label="Position"
-          error={form.formState.errors.professional?.position?.message}
-          required
-        >
+          {form.formState.errors.professional?.company?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.company?.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Position</label>
           <Controller
             name="professional.position"
             control={form.control}
@@ -446,13 +425,12 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-
-        <FormField
-          label="Years of Experience"
-          error={form.formState.errors.professional?.experience?.message}
-          required
-        >
+          {form.formState.errors.professional?.position?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.position?.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Years of Experience</label>
           <Controller
             name="professional.experience"
             control={form.control}
@@ -467,13 +445,12 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-
-        <FormField
-          label="Salary"
-          error={form.formState.errors.professional?.salary?.message}
-          required
-        >
+          {form.formState.errors.professional?.experience?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.experience?.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Salary</label>
           <Controller
             name="professional.salary"
             control={form.control}
@@ -488,18 +465,19 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-      </FormGrid>
+          {form.formState.errors.professional?.salary?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.salary?.message}</p>
+          )}
+        </div>
+      </div>
     </FormSection>
   );
 
   const renderPreferencesStep = () => (
     <FormSection title="Preferences" description="Customize your experience">
-      <FormGrid columns={2}>
-        <FormField
-          label="Theme"
-          error={form.formState.errors.preferences?.theme?.message}
-        >
+      <div className="grid grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Theme</label>
           <Controller
             name="preferences.theme"
             control={form.control}
@@ -512,12 +490,12 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-
-        <FormField
-          label="Language"
-          error={form.formState.errors.preferences?.language?.message}
-        >
+          {form.formState.errors.preferences?.theme?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.theme?.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Language</label>
           <Controller
             name="preferences.language"
             control={form.control}
@@ -530,14 +508,14 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
               />
             )}
           />
-        </FormField>
-      </FormGrid>
-
-      <FormGrid columns={1}>
-        <FormField
-          label="Notifications"
-          error={form.formState.errors.preferences?.newsletter?.message}
-        >
+          {form.formState.errors.preferences?.language?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.language?.message}</p>
+          )}
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 mt-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Subscribe to newsletter</label>
           <Controller
             name="preferences.newsletter"
             control={form.control}
@@ -547,17 +525,16 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={field.name}
-                label="Subscribe to newsletter"
                 variant={form.formState.errors.preferences?.newsletter ? 'error' : 'default'}
               />
             )}
           />
-        </FormField>
-
-        <FormField
-          label=""
-          error={form.formState.errors.preferences?.notifications?.message}
-        >
+          {form.formState.errors.preferences?.newsletter?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.newsletter?.message}</p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium mb-1">Enable push notifications</label>
           <Controller
             name="preferences.notifications"
             control={form.control}
@@ -567,13 +544,15 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={field.name}
-                label="Enable push notifications"
                 variant={form.formState.errors.preferences?.notifications ? 'error' : 'default'}
               />
             )}
           />
-        </FormField>
-      </FormGrid>
+          {form.formState.errors.preferences?.notifications?.message && (
+            <p className="mt-1 text-xs text-red-600">{form.formState.errors.preferences?.notifications?.message}</p>
+          )}
+        </div>
+      </div>
     </FormSection>
   );
 
@@ -606,57 +585,36 @@ export function MultiStepForm({ onSubmit, onCancel, isLoading }: MultiStepFormPr
 
         {renderCurrentStep()}
 
-        <FormActions>
-          <div className="flex justify-between w-full">
-            <div>
-              {currentStep > 0 && (
-                <FormButton
-                  type="button"
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={isLoading}
-                >
-                  <ChevronLeft className="w-4 h-4 mr-1" />
-                  Previous
-                </FormButton>
-              )}
-            </div>
-
-            <div className="flex space-x-3">
-              {onCancel && (
-                <FormButton 
-                  type="button" 
-                  variant="secondary" 
-                  onClick={onCancel}
-                  disabled={isLoading}
-                >
-                  Cancel
-                </FormButton>
-              )}
-              
-              {currentStep < steps.length - 1 ? (
-                <FormButton
-                  type="button"
-                  variant="primary"
-                  onClick={nextStep}
-                  disabled={isLoading}
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4 ml-1" />
-                </FormButton>
-              ) : (
-                <FormButton 
-                  type="submit" 
-                  variant="primary" 
-                  loading={isLoading}
-                  disabled={isLoading}
-                >
-                  Submit
-                </FormButton>
-              )}
-            </div>
-          </div>
-        </FormActions>
+        <div className="flex gap-4 justify-end mt-6">
+          {currentStep > 0 && (
+            <button
+              type="button"
+              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+              onClick={prevStep}
+              disabled={isLoading}
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" /> Previous
+            </button>
+          )}
+          {onCancel && (
+            <button
+              type="button"
+              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+              onClick={onCancel}
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+          )}
+          {/* Remove Save Draft button since saveDraft is not defined */}
+          <button
+            type="submit"
+            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+            disabled={isLoading}
+          >
+            {currentStep === steps.length - 1 ? 'Submit' : 'Next'}
+          </button>
+        </div>
       </Form>
     </FormCard>
   );

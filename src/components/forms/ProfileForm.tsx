@@ -1,16 +1,6 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { 
-  Form, 
-  FormField, 
-  FormSection, 
-  FormActions, 
-  FormButton, 
-  FormGrid, 
-  FormCard, 
-  FormError,
-  FormSuccess 
-} from '../ui/Form';
+import { Form, FormSection, FormCard, FormError, FormSuccess } from '../ui/Form';
 import { 
   Input, 
   Select, 
@@ -197,24 +187,8 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
           </div>
         </div>
         <div className="flex space-x-2">
-          <FormButton
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={loadDraftData}
-            disabled={isLoading}
-          >
-            Load Draft
-          </FormButton>
-          <FormButton
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={clearDraftData}
-            disabled={isLoading}
-          >
-            Clear Form
-          </FormButton>
+          <button type="button" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" onClick={loadDraftData} disabled={isLoading}>Load Draft</button>
+          <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={clearDraftData} disabled={isLoading}>Clear Form</button>
         </div>
       </div>
 
@@ -223,12 +197,9 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
         <FormSuccess message={submitSuccess} />
 
         <FormSection title="Personal Information">
-          <FormGrid columns={3}>
-            <FormField
-              label="First Name"
-              error={form.formState.errors.personal?.firstName?.message}
-              required
-            >
+          <div className="grid grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">First Name</label>
               <Controller
                 name="personal.firstName"
                 control={form.control}
@@ -241,12 +212,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
+              {form.formState.errors.personal?.firstName?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.firstName?.message}</p>
+              )}
+            </div>
 
-            <FormField
-              label="Middle Name"
-              error={form.formState.errors.personal?.middleName?.message}
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Middle Name</label>
               <Controller
                 name="personal.middleName"
                 control={form.control}
@@ -259,13 +231,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
+              {form.formState.errors.personal?.middleName?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.middleName?.message}</p>
+              )}
+            </div>
 
-            <FormField
-              label="Last Name"
-              error={form.formState.errors.personal?.lastName?.message}
-              required
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Last Name</label>
               <Controller
                 name="personal.lastName"
                 control={form.control}
@@ -278,15 +250,15 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.personal?.lastName?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.lastName?.message}</p>
+              )}
+            </div>
+          </div>
 
-          <FormGrid columns={2}>
-            <FormField
-              label="Email"
-              error={form.formState.errors.personal?.email?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Email</label>
               <Controller
                 name="personal.email"
                 control={form.control}
@@ -300,13 +272,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
+              {form.formState.errors.personal?.email?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.email?.message}</p>
+              )}
+            </div>
 
-            <FormField
-              label="Phone"
-              error={form.formState.errors.personal?.phone?.message}
-              required
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Phone</label>
               <Controller
                 name="personal.phone"
                 control={form.control}
@@ -320,15 +292,15 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.personal?.phone?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.phone?.message}</p>
+              )}
+            </div>
+          </div>
 
-          <FormGrid columns={3}>
-            <FormField
-              label="Date of Birth"
-              error={form.formState.errors.personal?.dateOfBirth?.message}
-              required
-            >
+          <div className="grid grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Date of Birth</label>
               <Controller
                 name="personal.dateOfBirth"
                 control={form.control}
@@ -341,12 +313,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
+              {form.formState.errors.personal?.dateOfBirth?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.dateOfBirth?.message}</p>
+              )}
+            </div>
 
-            <FormField
-              label="Gender"
-              error={form.formState.errors.personal?.gender?.message}
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Gender</label>
               <Controller
                 name="personal.gender"
                 control={form.control}
@@ -360,12 +333,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
+              {form.formState.errors.personal?.gender?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.gender?.message}</p>
+              )}
+            </div>
 
-            <FormField
-              label="Nationality"
-              error={form.formState.errors.personal?.nationality?.message}
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Nationality</label>
               <Controller
                 name="personal.nationality"
                 control={form.control}
@@ -378,16 +352,16 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.personal?.nationality?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.personal?.nationality?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Address Information">
-          <FormField
-            label="Street Address"
-            error={form.formState.errors.address?.street?.message}
-            required
-          >
+          <div className="space-y-2">
+            <label className="block text-sm font-medium mb-1">Street Address</label>
             <Controller
               name="address.street"
               control={form.control}
@@ -400,14 +374,13 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 />
               )}
             />
-          </FormField>
-
-          <FormGrid columns={2}>
-            <FormField
-              label="City"
-              error={form.formState.errors.address?.city?.message}
-              required
-            >
+            {form.formState.errors.address?.street?.message && (
+              <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.street?.message}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">City</label>
               <Controller
                 name="address.city"
                 control={form.control}
@@ -420,13 +393,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="State/Province"
-              error={form.formState.errors.address?.state?.message}
-              required
-            >
+              {form.formState.errors.address?.city?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.city?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">State/Province</label>
               <Controller
                 name="address.state"
                 control={form.control}
@@ -439,15 +411,14 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
-
-          <FormGrid columns={2}>
-            <FormField
-              label="ZIP/Postal Code"
-              error={form.formState.errors.address?.zipCode?.message}
-              required
-            >
+              {form.formState.errors.address?.state?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.state?.message}</p>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">ZIP/Postal Code</label>
               <Controller
                 name="address.zipCode"
                 control={form.control}
@@ -460,13 +431,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Country"
-              error={form.formState.errors.address?.country?.message}
-              required
-            >
+              {form.formState.errors.address?.zipCode?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.zipCode?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Country</label>
               <Controller
                 name="address.country"
                 control={form.control}
@@ -480,17 +450,17 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.address?.country?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.address?.country?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Professional Information">
-          <FormGrid columns={2}>
-            <FormField
-              label="Company"
-              error={form.formState.errors.professional?.company?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Company <span className="text-red-500">*</span></label>
               <Controller
                 name="professional.company"
                 control={form.control}
@@ -503,13 +473,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Position"
-              error={form.formState.errors.professional?.position?.message}
-              required
-            >
+              {form.formState.errors.professional?.company?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.company?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Position <span className="text-red-500">*</span></label>
               <Controller
                 name="professional.position"
                 control={form.control}
@@ -522,14 +491,15 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.professional?.position?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.position?.message}</p>
+              )}
+            </div>
+          </div>
 
-          <FormGrid columns={2}>
-            <FormField
-              label="Department"
-              error={form.formState.errors.professional?.department?.message}
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Department</label>
               <Controller
                 name="professional.department"
                 control={form.control}
@@ -542,13 +512,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Years of Experience"
-              error={form.formState.errors.professional?.experience?.message}
-              required
-            >
+              {form.formState.errors.professional?.department?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.department?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Years of Experience <span className="text-red-500">*</span></label>
               <Controller
                 name="professional.experience"
                 control={form.control}
@@ -565,15 +534,15 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.professional?.experience?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.experience?.message}</p>
+              )}
+            </div>
+          </div>
 
-          <FormField
-            label="Skills"
-            error={form.formState.errors.professional?.skills?.message}
-            helperText={`Select your technical skills (${selectedSkills.length} selected)`}
-            required
-          >
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium mb-1">Skills <span className="text-red-500">*</span></label>
+            <span className="text-xs text-gray-500">Select your technical skills ({selectedSkills.length} selected)</span>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
               {skillsOptions.map((skill) => (
                 <label
@@ -595,13 +564,14 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                 </label>
               ))}
             </div>
-          </FormField>
+            {form.formState.errors.professional?.skills?.message && (
+              <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.skills?.message}</p>
+            )}
+          </div>
 
-          <FormGrid columns={2}>
-            <FormField
-              label="LinkedIn Profile"
-              error={form.formState.errors.professional?.linkedinProfile?.message}
-            >
+          <div className="grid grid-cols-2 gap-6 mt-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">LinkedIn Profile</label>
               <Controller
                 name="professional.linkedinProfile"
                 control={form.control}
@@ -615,12 +585,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Portfolio Website"
-              error={form.formState.errors.professional?.portfolio?.message}
-            >
+              {form.formState.errors.professional?.linkedinProfile?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.linkedinProfile?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Portfolio Website</label>
               <Controller
                 name="professional.portfolio"
                 control={form.control}
@@ -634,17 +604,17 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.professional?.portfolio?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.professional?.portfolio?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Emergency Contact">
-          <FormGrid columns={2}>
-            <FormField
-              label="Emergency Contact Name"
-              error={form.formState.errors.emergency?.name?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Emergency Contact Name <span className="text-red-500">*</span></label>
               <Controller
                 name="emergency.name"
                 control={form.control}
@@ -657,13 +627,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Emergency Contact Phone"
-              error={form.formState.errors.emergency?.phone?.message}
-              required
-            >
+              {form.formState.errors.emergency?.name?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.name?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Emergency Contact Phone <span className="text-red-500">*</span></label>
               <Controller
                 name="emergency.phone"
                 control={form.control}
@@ -677,15 +646,15 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.emergency?.phone?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.phone?.message}</p>
+              )}
+            </div>
+          </div>
 
-          <FormGrid columns={2}>
-            <FormField
-              label="Relationship"
-              error={form.formState.errors.emergency?.relationship?.message}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6 mt-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Relationship <span className="text-red-500">*</span></label>
               <Controller
                 name="emergency.relationship"
                 control={form.control}
@@ -699,12 +668,12 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Emergency Contact Address"
-              error={form.formState.errors.emergency?.address?.message}
-            >
+              {form.formState.errors.emergency?.relationship?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.relationship?.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Emergency Contact Address</label>
               <Controller
                 name="emergency.address"
                 control={form.control}
@@ -717,161 +686,183 @@ export function ProfileForm({ onSubmit, onCancel, isLoading, initialData }: Prof
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.formState.errors.emergency?.address?.message && (
+                <p className="mt-1 text-xs text-red-600">{form.formState.errors.emergency?.address?.message}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Privacy & Preferences">
-          <FormGrid columns={2}>
-            <FormField
-              label="Privacy Settings"
-              helperText="Control who can see your profile information"
-            >
-              <div className="space-y-3">
-                <Controller
-                  name="preferences.privacy.profileVisible"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Make profile visible to others"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="preferences.privacy.showEmail"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Show email address on profile"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="preferences.privacy.showPhone"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Show phone number on profile"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Privacy Settings</label>
+              <span className="text-xs text-gray-500">Control who can see your profile information</span>
+              <div className="space-y-3 mt-2">
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.privacy.profileVisible"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Make profile visible to others</span>
+                      </>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.privacy.showEmail"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Show email address on profile</span>
+                      </>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.privacy.showPhone"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Show phone number on profile</span>
+                      </>
+                    )}
+                  />
+                </div>
               </div>
-            </FormField>
-
-            <FormField
-              label="Notification Preferences"
-              helperText="Choose how you want to receive notifications"
-            >
-              <div className="space-y-3">
-                <Controller
-                  name="preferences.notifications.email"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Email notifications"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="preferences.notifications.push"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Push notifications"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="preferences.notifications.sms"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="SMS notifications"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="preferences.notifications.marketing"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Checkbox
-                      checked={field.value}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      label="Marketing emails"
-                      disabled={isLoading}
-                    />
-                  )}
-                />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Notification Preferences</label>
+              <span className="text-xs text-gray-500">Choose how you want to receive notifications</span>
+              <div className="space-y-3 mt-2">
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.notifications.email"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Email notifications</span>
+                      </>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.notifications.push"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Push notifications</span>
+                      </>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.notifications.sms"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">SMS notifications</span>
+                      </>
+                    )}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Controller
+                    name="preferences.notifications.marketing"
+                    control={form.control}
+                    render={({ field }) => (
+                      <>
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          disabled={isLoading}
+                        />
+                        <span className="text-sm">Marketing emails</span>
+                      </>
+                    )}
+                  />
+                </div>
               </div>
-            </FormField>
-          </FormGrid>
+            </div>
+          </div>
         </FormSection>
 
-        <FormActions>
+        <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <FormButton 
+            <button 
               type="button" 
-              variant="secondary" 
+              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" 
               onClick={onCancel}
               disabled={isLoading}
             >
               Cancel
-            </FormButton>
+            </button>
           )}
-          <FormButton 
+          <button 
             type="button" 
-            variant="outline" 
+            className="px-4 py-2 rounded bg-blue-100 text-blue-800 hover:bg-blue-200 transition" 
             onClick={persistence.manualSave}
             disabled={isLoading}
           >
             Save Draft
-          </FormButton>
-          <FormButton 
+          </button>
+          <button 
             type="submit" 
-            variant="primary" 
-            loading={isLoading}
+            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" 
             disabled={isLoading}
           >
             Save Profile
-          </FormButton>
-        </FormActions>
+          </button>
+        </div>
       </Form>
     </FormCard>
   );

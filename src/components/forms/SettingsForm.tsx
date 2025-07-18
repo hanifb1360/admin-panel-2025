@@ -1,16 +1,6 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { 
-  Form, 
-  FormField, 
-  FormSection, 
-  FormActions, 
-  FormButton, 
-  FormGrid, 
-  FormCard, 
-  FormError,
-  FormSuccess 
-} from '../ui/Form';
+import { Form, FormSection, FormCard, FormError, FormSuccess } from '../ui/Form';
 import { 
   Input, 
   Textarea, 
@@ -121,12 +111,12 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
         <FormSuccess message={submitSuccess} />
 
         <FormSection title="General Settings">
-          <FormGrid columns={2}>
-            <FormField
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
               label="Site Name"
               error={form.getFieldError('siteName')}
               required
-            >
+            
               <Controller
                 name="siteName"
                 control={form.control}
@@ -139,13 +129,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
+            </div>
 
-            <FormField
+            <div className="space-y-2">
               label="Admin Email"
               error={form.getFieldError('adminEmail')}
               required
-            >
+            
               <Controller
                 name="adminEmail"
                 control={form.control}
@@ -159,14 +149,14 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+            </div>
+          </div>
 
-          <FormField
+          <div className="space-y-2">
             label="Site Description"
             error={form.getFieldError('siteDescription')}
             helperText="A brief description of your site (optional)"
-          >
+          
             <Controller
               name="siteDescription"
               control={form.control}
@@ -180,13 +170,14 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                 />
               )}
             />
-          </FormField>
+          </div>
 
-          <FormField
+          <div className="space-y-2">
             label="Maintenance Mode"
             error={form.getFieldError('maintenanceMode')}
             helperText="Enable maintenance mode to restrict site access"
-          >
+          
+            <label className="block text-sm font-medium mb-1">Enable maintenance mode</label>
             <Controller
               name="maintenanceMode"
               control={form.control}
@@ -196,13 +187,15 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   onChange={field.onChange}
                   onBlur={field.onBlur}
                   name={field.name}
-                  label="Enable maintenance mode"
                   variant={form.getFieldError('maintenanceMode') ? 'error' : 'default'}
                   disabled={isLoading}
                 />
               )}
             />
-          </FormField>
+            {form.getFieldError('maintenanceMode') && (
+              <p className="mt-1 text-xs text-red-600">{form.getFieldError('maintenanceMode')}</p>
+            )}
+          </div>
 
           {maintenanceMode && (
             <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
@@ -214,12 +207,12 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
         </FormSection>
 
         <FormSection title="Appearance & Localization">
-          <FormGrid columns={3}>
-            <FormField
+          <div className="grid grid-cols-3 gap-6">
+            <div className="space-y-2">
               label="Theme"
               error={form.getFieldError('theme')}
               helperText="Choose your preferred theme"
-            >
+            
               <Controller
                 name="theme"
                 control={form.control}
@@ -231,13 +224,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
+            </div>
 
-            <FormField
+            <div className="space-y-2">
               label="Language"
               error={form.getFieldError('language')}
               helperText="Default language for the interface"
-            >
+            
               <Controller
                 name="language"
                 control={form.control}
@@ -251,13 +244,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
+            </div>
 
-            <FormField
+            <div className="space-y-2">
               label="Timezone"
               error={form.getFieldError('timezone')}
               helperText="Default timezone for dates and times"
-            >
+            
               <Controller
                 name="timezone"
                 control={form.control}
@@ -271,16 +264,18 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Notification Settings">
-          <FormField
+          <div className="space-y-2">
             label="Notification Types"
             helperText="Choose which types of notifications you want to receive"
-          >
+          
             <div className="space-y-3">
+              <label className="block text-sm font-medium mb-1">Email notifications</label>
+              <span className="text-xs text-gray-500 mb-1 block">Receive notifications via email</span>
               <Controller
                 name="notifications.email"
                 control={form.control}
@@ -290,13 +285,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     name={field.name}
-                    label="Email notifications"
-                    helperText="Receive notifications via email"
                     disabled={isLoading}
                   />
                 )}
               />
 
+              <label className="block text-sm font-medium mb-1">Push notifications</label>
+              <span className="text-xs text-gray-500 mb-1 block">Receive push notifications in your browser</span>
               <Controller
                 name="notifications.push"
                 control={form.control}
@@ -306,13 +301,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     name={field.name}
-                    label="Push notifications"
-                    helperText="Receive push notifications in your browser"
                     disabled={isLoading}
                   />
                 )}
               />
 
+              <label className="block text-sm font-medium mb-1">SMS notifications</label>
+              <span className="text-xs text-gray-500 mb-1 block">Receive notifications via SMS (requires phone number)</span>
               <Controller
                 name="notifications.sms"
                 control={form.control}
@@ -322,21 +317,20 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     name={field.name}
-                    label="SMS notifications"
-                    helperText="Receive notifications via SMS (requires phone number)"
                     disabled={isLoading}
                   />
                 )}
               />
             </div>
-          </FormField>
+          </div>
         </FormSection>
 
         <FormSection title="Security Settings">
-          <FormField
+          <div className="space-y-2">
             label="Two-Factor Authentication"
             helperText="Enable two-factor authentication for enhanced security"
-          >
+          
+            <label className="block text-sm font-medium mb-1">Enable two-factor authentication</label>
             <Controller
               name="security.twoFactorAuth"
               control={form.control}
@@ -346,12 +340,11 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   onChange={field.onChange}
                   onBlur={field.onBlur}
                   name={field.name}
-                  label="Enable two-factor authentication"
                   disabled={isLoading}
                 />
               )}
             />
-          </FormField>
+          </div>
 
           {twoFactorAuth && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -361,10 +354,9 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
             </div>
           )}
 
-          <FormField
-            label="Session Timeout"
-            helperText={`Users will be logged out after ${sessionTimeout} minutes of inactivity`}
-          >
+          <div className="space-y-2">
+            <label className="block text-sm font-medium mb-1">Session Timeout</label>
+            <span className="text-xs text-gray-500 mb-1 block">Users will be logged out after {sessionTimeout} minutes of inactivity</span>
             <Controller
               name="security.sessionTimeout"
               control={form.control}
@@ -380,13 +372,12 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                 />
               )}
             />
-          </FormField>
+          </div>
 
           <FormSection title="Password Policy" className="ml-0 pl-0">
-            <FormField
-              label="Minimum Password Length"
-              helperText="Minimum number of characters required for passwords"
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Minimum Password Length</label>
+              <span className="text-xs text-gray-500 mb-1 block">Minimum number of characters required for passwords</span>
               <Controller
                 name="security.passwordPolicy.minLength"
                 control={form.control}
@@ -402,13 +393,13 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                   />
                 )}
               />
-            </FormField>
+            </div>
 
-            <FormField
-              label="Password Requirements"
-              helperText="Select which character types are required in passwords"
-            >
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Password Requirements</label>
+              <span className="text-xs text-gray-500 mb-1 block">Select which character types are required in passwords</span>
               <div className="space-y-3">
+                <label className="block text-sm">Require uppercase letters (A-Z)</label>
                 <Controller
                   name="security.passwordPolicy.requireUppercase"
                   control={form.control}
@@ -418,12 +409,12 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                       name={field.name}
-                      label="Require uppercase letters (A-Z)"
                       disabled={isLoading}
                     />
                   )}
                 />
 
+                <label className="block text-sm">Require numbers (0-9)</label>
                 <Controller
                   name="security.passwordPolicy.requireNumbers"
                   control={form.control}
@@ -433,12 +424,12 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                       name={field.name}
-                      label="Require numbers (0-9)"
                       disabled={isLoading}
                     />
                   )}
                 />
 
+                <label className="block text-sm">Require special characters (!@#$%^&*)</label>
                 <Controller
                   name="security.passwordPolicy.requireSymbols"
                   control={form.control}
@@ -448,36 +439,21 @@ export function SettingsForm({ onSubmit, onCancel, isLoading, initialData }: Set
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                       name={field.name}
-                      label="Require special characters (!@#$%^&*)"
                       disabled={isLoading}
                     />
                   )}
                 />
               </div>
-            </FormField>
+            </div>
           </FormSection>
         </FormSection>
 
-        <FormActions>
+        <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <FormButton 
-              type="button" 
-              variant="secondary" 
-              onClick={onCancel}
-              disabled={isLoading}
-            >
-              Cancel
-            </FormButton>
+            <button type="button" className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" onClick={onCancel} disabled={isLoading}>Cancel</button>
           )}
-          <FormButton 
-            type="submit" 
-            variant="primary" 
-            loading={isLoading}
-            disabled={isLoading}
-          >
-            Save Settings
-          </FormButton>
-        </FormActions>
+          <button type="submit" className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" disabled={isLoading}>Save Settings</button>
+        </div>
       </Form>
     </FormCard>
   );

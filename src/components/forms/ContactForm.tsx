@@ -2,11 +2,7 @@ import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { 
   Form, 
-  FormField, 
   FormSection, 
-  FormActions, 
-  FormButton, 
-  FormGrid, 
   FormCard, 
   FormError,
   FormSuccess 
@@ -116,12 +112,9 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
         <FormSuccess message={submitSuccess} />
 
         <FormSection title="Contact Information">
-          <FormGrid columns={2}>
-            <FormField
-              label="Name"
-              error={form.getFieldError('name')}
-              required
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Name</label>
               <Controller
                 name="name"
                 control={form.control}
@@ -134,13 +127,12 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Email"
-              error={form.getFieldError('email')}
-              required
-            >
+              {form.getFieldError('name') && (
+                <p className="mt-1 text-xs text-red-600">{form.getFieldError('name')}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Email</label>
               <Controller
                 name="email"
                 control={form.control}
@@ -154,17 +146,17 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.getFieldError('email') && (
+                <p className="mt-1 text-xs text-red-600">{form.getFieldError('email')}</p>
+              )}
+            </div>
+          </div>
         </FormSection>
 
         <FormSection title="Message Details">
-          <FormGrid columns={2}>
-            <FormField
-              label="Priority"
-              error={form.getFieldError('priority')}
-              helperText="Select the urgency level of your inquiry"
-            >
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Priority</label>
               <Controller
                 name="priority"
                 control={form.control}
@@ -178,13 +170,13 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                   />
                 )}
               />
-            </FormField>
-
-            <FormField
-              label="Category"
-              error={form.getFieldError('category')}
-              helperText="Choose the category that best fits your inquiry"
-            >
+              {form.getFieldError('priority') && (
+                <p className="mt-1 text-xs text-red-600">{form.getFieldError('priority')}</p>
+              )}
+              <p className="text-xs text-gray-500">Select the urgency level of your inquiry</p>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium mb-1">Category</label>
               <Controller
                 name="category"
                 control={form.control}
@@ -198,15 +190,15 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                   />
                 )}
               />
-            </FormField>
-          </FormGrid>
+              {form.getFieldError('category') && (
+                <p className="mt-1 text-xs text-red-600">{form.getFieldError('category')}</p>
+              )}
+              <p className="text-xs text-gray-500">Choose the category that best fits your inquiry</p>
+            </div>
+          </div>
 
-          <FormField
-            label="Subject"
-            error={form.getFieldError('subject')}
-            helperText={`${getFieldCharacterCount('subject')}/100 characters`}
-            required
-          >
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium mb-1">Subject</label>
             <Controller
               name="subject"
               control={form.control}
@@ -220,14 +212,14 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 />
               )}
             />
-          </FormField>
+            {form.getFieldError('subject') && (
+              <p className="mt-1 text-xs text-red-600">{form.getFieldError('subject')}</p>
+            )}
+            <p className="text-xs text-gray-500">{getFieldCharacterCount('subject')}/100 characters</p>
+          </div>
 
-          <FormField
-            label="Message"
-            error={form.getFieldError('message')}
-            helperText={`${getFieldCharacterCount('message')}/1000 characters`}
-            required
-          >
+          <div className="space-y-2 mt-6">
+            <label className="block text-sm font-medium mb-1">Message</label>
             <Controller
               name="message"
               control={form.control}
@@ -242,20 +234,22 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                 />
               )}
             />
-          </FormField>
+            {form.getFieldError('message') && (
+              <p className="mt-1 text-xs text-red-600">{form.getFieldError('message')}</p>
+            )}
+            <p className="text-xs text-gray-500">{getFieldCharacterCount('message')}/1000 characters</p>
+          </div>
         </FormSection>
 
         <FormSection title="Attachments (Optional)">
-          <FormField
-            label="File Attachments"
-            helperText="You can attach images (JPEG, PNG, GIF), PDF files, or text documents. Maximum file size: 10MB each."
-          >
+          <div className="space-y-2">
+            <label className="block text-sm font-medium mb-1">File Attachments</label>
             <FileUpload
               multiple
               accept=".jpg,.jpeg,.png,.gif,.pdf,.txt"
               maxSize={10 * 1024 * 1024}
               maxFiles={5}
-              acceptedTypes={['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'text/plain']}
+              acceptedTypes={["image/jpeg", "image/png", "image/gif", "application/pdf", "text/plain"]}
               onFileSelect={(files) => {
                 if (files) {
                   const fileArray = Array.from(files);
@@ -264,7 +258,8 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
               }}
               disabled={isLoading}
             />
-          </FormField>
+            <p className="text-xs text-gray-500">You can attach images (JPEG, PNG, GIF), PDF files, or text documents. Maximum file size: 10MB each.</p>
+          </div>
 
           {uploadedFiles.length > 0 && (
             <div className="mt-4 space-y-2">
@@ -299,15 +294,14 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
                         </p>
                       </div>
                     </div>
-                    <FormButton
+                    <button
                       type="button"
-                      variant="outline"
-                      size="sm"
+                      className="px-2 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 text-xs"
                       onClick={() => removeFile(index)}
                       disabled={isLoading}
                     >
                       Remove
-                    </FormButton>
+                    </button>
                   </div>
                 ))}
               </div>
@@ -315,26 +309,25 @@ export function ContactForm({ onSubmit, onCancel, isLoading, initialData }: Cont
           )}
         </FormSection>
 
-        <FormActions>
+        <div className="flex gap-4 justify-end mt-6">
           {onCancel && (
-            <FormButton 
+            <button 
               type="button" 
-              variant="secondary" 
+              className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition" 
               onClick={onCancel}
               disabled={isLoading}
             >
               Cancel
-            </FormButton>
+            </button>
           )}
-          <FormButton 
+          <button 
             type="submit" 
-            variant="primary" 
-            loading={isLoading}
+            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition" 
             disabled={isLoading || !form.state.isValid}
           >
             Send Message
-          </FormButton>
-        </FormActions>
+          </button>
+        </div>
       </Form>
     </FormCard>
   );
